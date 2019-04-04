@@ -4,7 +4,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/index.js',
+    './map/map.js',
   ],
   output: {
     filename: 'bundle.js',
@@ -46,7 +46,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
+      template: "./common/index.html",
       inject: "body",
       filename: "index.html"
     })

@@ -2,13 +2,11 @@
   "name": "react-map-with-leaflet",
   "version": "1.0.0",
   "description": "React map with Leaflet",
-  "main": "./src/index.js",
+  "main": "./src/map.js",
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack -p",
-    "watch": "webpack --watch",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "watch": "webpack --watch"
   },
   "keywords": [
     "react",
@@ -20,28 +18,22 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
-    "babel-plugin-autobind-class-methods": "^5.0.1",
-    "babel-plugin-styled-components": "^1.5.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-runtime": "^6.26.0",
 
     "css-loader": "^2.1.0",
     "style-loader": "^0.23.1",
     "html-loader": "^0.5.5",
+
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
-    "geojson-world-map": "^0.0.2",
     "leaflet": "^1.3.1",
-    "leaflet.markercluster": "^1.3.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-leaflet": "^1.9.1",
-    "react-leaflet-markercluster": "^1.1.8"
+    "react-leaflet": "^1.9.1"
   }
 }
