@@ -1,36 +1,46 @@
+const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: [
-        './App.jsx'
-    ],
-    output: {
-        path: __dirname,
-        filename: "bundle.js"
-    },
-    module: {
-        loaders: [{
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loader: 'babel',
-            query:
-            {
-                presets:['es2015', 'react'],
-                plugins: ['transform-class-properties'],
-                env: {
-                    development: {
-                        presets: ['react-hmre'],
-                    },
-                },
-            },
-        }],
-    },
-    watchOptions: {
-        poll: 1000,
-    },
-    devServer: {
-        historyApiFallback: {
-            index: '/',
-        },
-    },
+  devtool: 'source-map',
+  entry: [
+    './map/TransitMap.jsx',
+  ],
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  devServer: {
+    host: 'localhost',
+    contentBase: "./dist"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(jsx|js)?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              retainLines: true,
+              presets: ['es2015', 'react']
+            }
+          }
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      }
+    ]
+  }
 };

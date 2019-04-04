@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { Map, TileLayer } from 'react-leaflet';
 import Control from 'react-leaflet-control';
@@ -8,14 +8,10 @@ const stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design<
 const mapCenter = [39.9528, -75.1638];
 const zoomLevel = 12;
 
-export default class App extends Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = { currentZoomLevel: zoomLevel };
-        this.handleUpPanClick = this.handleUpPanClick.bind(this);
-        this.handleRightPanClick = this.handleRightPanClick.bind(this);
-        this.handleLeftPanClick = this.handleLeftPanClick.bind(this);
-        this.handleDownPanClick = this.handleDownPanClick.bind(this);
     }
 
     componentDidMount() {
