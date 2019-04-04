@@ -12,7 +12,7 @@ module.exports = {
   },
   devServer: {
     host: 'localhost',
-    contentBase: "./dist"
+    contentBase: "./"
   },
   module: {
     rules: [
