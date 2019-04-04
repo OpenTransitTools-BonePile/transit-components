@@ -8,96 +8,87 @@ const stamenTonerAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design<
 const mapCenter = [39.9528, -75.1638];
 const zoomLevel = 12;
 
-export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { currentZoomLevel: zoomLevel };
-    }
+/*
+ TODO:
+   a) switch between tilesets ... and make a layer control
+   b) move layer (and pan) control into separate component
+   c) configuration
+   d) add search
+   e) add overlays (routes)
+   f) add vehicles (separate component lib)
+   g) localize
+*/
 
-    componentDidMount() {
-        const leafletMap = this.leafletMap.leafletElement;
-        leafletMap.on('zoomend', () => {
-            const updatedZoomLevel = leafletMap.getZoom();
-            this.handleZoomLevelChange(updatedZoomLevel);
-        });
-    }
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentZoomLevel: zoomLevel,
+      leafletMap: null
+    };
+  }
 
-    handleZoomLevelChange(newZoomLevel) {
-        this.setState({ currentZoomLevel: newZoomLevel });
-    }
+  componentDidMount() {
+    const leafletMap = this.leafletMap.leafletElement;
+    this.setState({leafletMap: leafletMap});
+    leafletMap.on('zoomend', () => {
+      const updatedZoomLevel = leafletMap.getZoom();
+      this.handleZoomLevelChange(updatedZoomLevel);
+    });
+  }
 
-    handleUpPanClick() {
-        const leafletMap = this.leafletMap.leafletElement;
-        leafletMap.panBy([0, -100]);
-        window.console.log('Panning up');
-    }
+  handleZoomLevelChange(newZoomLevel) {
+    this.setState({ currentZoomLevel: newZoomLevel });
+  }
 
-    handleRightPanClick() {
-        const leafletMap = this.leafletMap.leafletElement;
-        leafletMap.panBy([100, 0]);
-        window.console.log('Panning right');
-    }
+  handleRightPanClick() {
+    this.state.leafletMap.panBy([100, 0]);
+    window.console.log('Panning right');
+  }
 
-    handleLeftPanClick() {
-        const leafletMap = this.leafletMap.leafletElement;
-        leafletMap.panBy([-100, 0]);
-        window.console.log('Panning left');
-    }
+  handleLeftPanClick() {
+    this.state.leafletMap.panBy([-100, 0]);
+    window.console.log('Panning left');
+  }
 
-    handleDownPanClick() {
-        const leafletMap = this.leafletMap.leafletElement;
-        leafletMap.panBy([0, 100]);
-        window.console.log('Panning down');
-    }
+  render() {
+    window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
 
-    render() {
-        window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
-
-        return (
+    return (
+    <div>
+      <Map
+      ref={m => { this.leafletMap = m; }}
+      center={mapCenter}
+      zoom={zoomLevel}
+      >
+        <TileLayer
+        attribution={stamenTonerAttr}
+        url={stamenTonerTiles}
+        />
+        <Control position="topright">
+          <div
+          style={{
+            backgroundColor: 'black',
+            padding: '5px',
+          }}
+          >
             <div>
-                <Map
-                    ref={m => { this.leafletMap = m; }}
-                    center={mapCenter}
-                    zoom={zoomLevel}
-                >
-                    <TileLayer
-                        attribution={stamenTonerAttr}
-                        url={stamenTonerTiles}
-                    />
-                    <Control position="topright">
-                        <div
-                            style={{
-                                backgroundColor: 'black',
-                                padding: '5px',
-                            }}
-                        >
-                            <div style={{ marginLeft: '37px' }}>
-                                <button onClick={this.handleUpPanClick}>
-                                    Pan up
-                                </button>
-                            </div>
-                            <div>
-                                <button onClick={this.handleLeftPanClick}>
-                                    Pan left
-                                </button>
-                                <button onClick={this.handleRightPanClick}>
-                                    Pan right
-                                </button>
-                            </div>
-                            <div style={{ marginLeft: '30px' }}>
-                                <button onClick={this.handleDownPanClick}>
-                                    Pan down
-                                </button>
-                            </div>
-                        </div>
-                    </Control>
-                </Map>
+              <button onClick={() => this.handleLeftPanClick()}>
+                Map
+              </button>
+              <button onClick={() => this.handleRightPanClick()}>
+                Aerial
+              </button>
             </div>
-        );
-    }
+          </div>
+        </Control>
+      </Map>
+    </div>
+    );
+  }
 }
 
 render(
-    <App />,
-    document.getElementById('mount')
+  <App />,
+  document.getElementById('mount'),
 );
