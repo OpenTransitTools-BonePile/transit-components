@@ -29,13 +29,47 @@ const zoomLevel = 12;
    g) localize
 */
 
+
+export default class BaseLayerControl extends React.Component {
+
+  handleRightPanClick() {
+    this.props.map.setState({url: stamenTonerTiles});
+  }
+
+  handleLeftPanClick() {
+    this.props.map.setState({url: stamenXTiles});
+  }
+
+  render() {
+    window.console.log('BLA');
+    return (
+      <div
+        style={{
+          backgroundColor: 'black',
+          padding: '5px',
+        }}
+      >
+        <div id="blc">
+          <button onClick={() => this.handleLeftPanClick()}>
+            Map
+          </button>
+          <button onClick={() => this.handleRightPanClick()}>
+            Aerial
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
+
+
 class TransitMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       zoom: zoomLevel,
-      url: stamenXTiles,
       leafletMap: null,
+      url: stamenXTiles,
     };
   }
 
@@ -49,50 +83,29 @@ class TransitMap extends React.Component {
   }
 
   handleZoomLevelChange(newZoomLevel) {
-    this.setState({ zoom: newZoomLevel });
+    this.setState({zoom: newZoomLevel});
   }
 
-  handleRightPanClick() {
-    this.setState({url: stamenTonerTiles});
-  }
-
-  handleLeftPanClick() {
-    this.setState({url: stamenXTiles});
-  }
 
   render() {
     window.console.log('this.state.zoom ->', this.state.zoom);
 
     return (
-    <div>
-      <Map
-        ref={m => { this.leafletMap = m; }}
-        center={mapCenter}
-        zoom={this.state.zoom}
-      >
-        <TileLayer
-          attribution={stamenTonerAttr}
-          url={this.state.url}
-        />
-        <Control position="topright">
-          <div
-            style={{
-              backgroundColor: 'black',
-              padding: '5px',
-            }}
-          >
-            <div>
-              <button onClick={() => this.handleLeftPanClick()}>
-                Map
-              </button>
-              <button onClick={() => this.handleRightPanClick()}>
-                Aerial
-              </button>
-            </div>
-          </div>
-        </Control>
-      </Map>
-    </div>
+      <div>
+        <Map
+          ref={m => { this.leafletMap = m; }}
+          center={mapCenter}
+          zoom={this.state.zoom}
+        >
+          <TileLayer
+            attribution={stamenTonerAttr}
+            url={this.state.url}
+          />
+          <Control position="topright">
+            <BaseLayerControl map={this} />
+          </Control>
+        </Map>
+      </div>
     );
   }
 }
