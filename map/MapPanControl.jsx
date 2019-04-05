@@ -20,7 +20,7 @@ class Pan extends React.Component {
   }
 
   render() {
-    window.console.log('this.state.currentZoomLevel ->', this.state.currentZoomLevel);
+    window.console.log('this.state.zoom ->', this.state.zoom);
 
     return (
       <Control position="topright">
