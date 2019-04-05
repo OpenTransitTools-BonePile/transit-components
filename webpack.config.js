@@ -1,18 +1,16 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
   entry: [
     './map/TransitMap.jsx',
   ],
+  devServer: {
+    host: 'localhost',
+    contentBase: "./common/"
+  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
-  },
-  devServer: {
-    host: 'localhost',
-    contentBase: "./"
   },
   module: {
     rules: [
@@ -24,7 +22,7 @@ module.exports = {
             loader: 'babel-loader',
             query: {
               retainLines: true,
-              presets: ['es2015', 'react']
+              presets: ['env', 'react']
             }
           }
         ]
