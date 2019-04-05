@@ -29,7 +29,7 @@ const zoomLevel = 12;
    g) localize
 */
 
-class App extends React.Component {
+class TransitMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,6 +98,6 @@ class App extends React.Component {
 }
 
 render(
-  <App />,
+  <TransitMap />,
   document.getElementById('mount'),
 );
