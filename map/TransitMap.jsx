@@ -39,21 +39,10 @@ class TransitMap extends React.Component {
   }
 
   componentDidMount() {
-    const leafletMap = this.leafletMap.leafletElement;
-    this.setState({leafletMap: leafletMap});
-    leafletMap.on('zoomend', () => {
-      const updatedZoomLevel = leafletMap.getZoom();
-      this.handleZoomLevelChange(updatedZoomLevel);
-    });
-  }
-
-  handleZoomLevelChange(newZoomLevel) {
-    this.setState({zoom: newZoomLevel});
+    this.setState({leafletMap: this.leafletMap.leafletElement});
   }
 
   render() {
-    window.console.log('this.state.zoom ->', this.state.zoom);
-
     return (
       <div>
         <Map
