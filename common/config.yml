@@ -10,12 +10,12 @@ map:
   # Default map center
   initLat: 45.52
   initLon: -122.682
-  initZoom: 10
+  initZoom: 12
 
   baseLayers:
     - name: Streets
       url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/currentOSM/{z}/{x}/{y}
-      attribution: 'Map tiles: <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+      attribution: 'Map tiles: blah'
       maxZoom: 20
 
     - name: Aerials
