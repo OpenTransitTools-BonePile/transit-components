@@ -19,6 +19,9 @@
     "react-leaflet-control": "1.2.0"
   },
   "devDependencies": {
+    "yaml-loader": "^0.5.0",
+    "json-loader": "^0.5.7",
+
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-autobind-class-methods": "^5.0.1",

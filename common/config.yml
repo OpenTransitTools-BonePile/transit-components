@@ -1,0 +1,95 @@
+map:
+  # Enabled map views
+  # NOTE: 'views' is a MOD-map specific ... here to make sure unused stuff don't break OTT map
+  views:
+    - type: DEFAULT
+      text: Map View
+    - type: STYLIZED
+      text: Network View
+
+  # Default map center
+  initLat: 45.52
+  initLon: -122.682
+  initZoom: 10
+
+  baseLayers:
+    - name: Streets
+      url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/currentOSM/{z}/{x}/{y}
+      attribution: 'Map tiles: <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+      maxZoom: 20
+
+    - name: Aerials
+      url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/hybridOSM/{z}/{x}/{y}
+      attribution: 'Map tiles: <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+      maxZoom: 20
+
+  overlays:
+    - type: bike-rental
+      name: Biketown Locations
+      api: //TODO:NOT_IN_MOD_CONFIG
+      modes:
+        - BICYCLE_RENT
+
+    - type: car-rental
+      name: REACH THERE Locations
+      api: //TODO:NOT_IN_MOD_CONFIG
+      modes:
+        - CAR_RENT
+
+    - type: car-rental
+      name: REACH NOW Locations
+      api: //TODO:NOT_IN_MOD_CONFIG
+      modes:
+        - CAR_RENT
+
+    - type: zipcar
+      name: Zipcar Locations
+      api: https://modbeta.trimet.org/ws/carshare/zipcar/data.json
+
+    - type: park-and-ride
+      name: Park & Ride Locations
+      api: //TODO:NOT_IN_MOD_CONFIG
+      layer: 11
+      maxTransitDistance: 1000
+      modes:
+        - CAR_PARK
+
+    - type: stops
+      name: Transit Stops
+      api: //TODO:NOT_IN_MOD_CONFIG
+      layer: 11
+      visible: true
+
+    - type: vehicles
+      name: Vehicle Locations
+      api: http://localhost:54145/vehicles_via_route?id=12
+
+geocoder:
+  baseUrl: https://ws-st.trimet.org/pelias/v1
+
+  boundary:
+    rect:
+      minLon: -123.2034
+      maxLon: -122.135
+      minLat: 45.273
+      maxLat: 45.7445
+
+  maxNearbyStops: 6
+
+reportIssue:
+  mailto: gis@trimet.org
+
+analytics:
+  google:
+    globalSiteTag: UA-133677388-1
+
+dateTime:
+  timeFormat: h:mma
+
+# TODO: rename this from 'alternateTransitIndex' to transitIndex in MOD? OR move to layers above?
+transitIndex:
+  apiRoot: https://modbeta.trimet.org/ws/ti/v0/
+  services:
+     - stops
+     - stops/routes
+     - routes
