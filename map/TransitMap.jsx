@@ -22,7 +22,7 @@ import config from "json-loader!yaml-loader!../common/config.yml";
    h) make a pan control
 */
 
-class TransitMap extends React.Component {
+export default class TransitMap extends React.Component {
 
   constructor(props) {
     super(props);

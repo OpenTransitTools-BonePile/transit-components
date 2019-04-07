@@ -12,6 +12,7 @@ map:
   initLon: -122.682
   initZoom: 12
 
+  baseLayerButtons: true
   baseLayers:
     - name: Streets
       url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/currentOSM/{z}/{x}/{y}
@@ -80,6 +81,7 @@ reportIssue:
   mailto: gis@trimet.org
 
 analytics:
+  facebook: z
   google:
     globalSiteTag: UA-133677388-1
 
