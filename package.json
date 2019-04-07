@@ -5,7 +5,6 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack --progress --colors",
-    "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Frank Purcell",
@@ -19,17 +18,10 @@
     "react-leaflet-control": "1.2.0"
   },
   "devDependencies": {
-    "yaml-loader": "^0.5.0",
-    "json-loader": "^0.5.7",
-
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
-    "babel-plugin-autobind-class-methods": "^5.0.1",
-    "babel-plugin-styled-components": "^1.5.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-runtime": "^6.26.0",
 
     "eslint": "2.10.2",
     "eslint-config-airbnb": "9.0.1",
@@ -38,8 +30,14 @@
     "eslint-plugin-jsx-a11y": "1.2.2",
     "eslint-plugin-react": "5.1.1",
 
+    "yaml-loader": "^0.5.0",
+    "json-loader": "^0.5.7",
+    "html-loader": "^0.5.5",
+    "css-loader": "^2.1.1",
+
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
+    "html-webpack-plugin": "^3.2.0",
     "webpack-dev-server": "^3.2.1"
   }
 }

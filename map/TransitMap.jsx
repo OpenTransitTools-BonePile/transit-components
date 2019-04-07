@@ -46,6 +46,7 @@ export default class TransitMap extends React.Component {
         >
           <TileLayer
             url={this.state.baseLayer.url}
+            maxZoom={this.state.baseLayer.maxZoom}
             attribution={this.state.baseLayer.attribution}
           />
           <Control position="topright">

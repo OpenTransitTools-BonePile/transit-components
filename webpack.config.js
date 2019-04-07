@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -13,6 +14,13 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'common/templates/simple.html',
+      title: 'Simple Map',
+      inject: true
+    }),
+  ],
   module: {
     rules: [
       {
@@ -29,7 +37,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.html$/,
+        test: /\.(html|htm)?$/,
         use: [
           {
             loader: "html-loader"
