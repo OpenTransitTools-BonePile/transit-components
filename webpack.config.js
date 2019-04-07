@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: [
-    './map/TransitMap.jsx',
+    './map/index.js',
   ],
   devServer: {
     host: 'localhost',
@@ -16,8 +16,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'common/templates/simple.html',
       title: 'Simple Map',
+      template: './common/templates/simple.html',
+      filename: './index.html',
       inject: true
     }),
   ],
