@@ -11,6 +11,7 @@ map:
   initLat: 45.52
   initLon: -122.682
   initZoom: 12
+  maxZoom: 22
 
   baseLayerButtons: true
   baseLayers:
@@ -22,7 +23,7 @@ map:
     - name: Aerials
       url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/hybridOSM/{z}/{x}/{y}
       attribution: 'Map tiles: <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-      maxZoom: 20
+      maxZoom: 22
 
   overlays:
     - type: bike-rental

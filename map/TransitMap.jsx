@@ -1,29 +1,7 @@
 import React from 'react';
-
 import { Map, TileLayer } from 'react-leaflet';
 import Control from 'react-leaflet-control';
-
 import BaseLayerControl from './BaseLayerControl.jsx';
-
-/*
- DONE:
-   - switch between tilesets
-   - configuration + default point and zoom, etc...
-   - make a layer control
-   - allow config to be injected into this class some way ... maybe via a test app
-   - HtmlWebpackPlugin({ with index templ ala MOD and index.html
-   - refactor config so that we're not hard-coded to use ../common/config.yml
-
- TODO:
-   d) add search
-   e) add overlays (routes)
-   f) add vehicles (separate component lib)
-   g) localize
-   h) make a pan control
-   i) clean up the control stuff below: more dynamic (layer names & number button from .yml),
-      option to put it in layer switcher or as buttons, etc...
-   j) ???
-*/
 
 export default class TransitMap extends React.Component {
 
@@ -39,6 +17,12 @@ export default class TransitMap extends React.Component {
     this.setState({leafletMap: this.leafletMap.leafletElement});
   }
 
+  // TODO: using a single TileLayer, which we change URLs on, is a bit strange ... do multiple
+  // layers, and find a way to not render them in the layer switcher (e.g., config that as an
+  // option -- buttons or layer switcher).
+
+  // TODO: maxZoom on the map should be 24, and layers should then not zoom beyond their spec'd max
+
   render() {
     return (
       <div>
@@ -46,6 +30,7 @@ export default class TransitMap extends React.Component {
           ref={m => { this.leafletMap = m; }}
           center={[this.props.config.initLat, this.props.config.initLon]}
           zoom={this.props.config.initZoom}
+          maxZoom={this.props.config.maxZoom || "20"}
         >
           <TileLayer
             url={this.state.baseLayer.url}
