@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class BaseLayerControl extends React.Component {
+class BaseLayerControl extends React.Component {
 
   handleLeftPanClick() {
     this.props.map.setState({baseLayer: this.props.baseLayers[0]});
@@ -11,7 +11,7 @@ export default class BaseLayerControl extends React.Component {
   }
 
   render() {
-    window.console.log('BLA');
+    window.console.log('BaseLayerControl render');
     return (
       <div
         style={{
@@ -30,4 +30,6 @@ export default class BaseLayerControl extends React.Component {
       </div>
     );
   }
-};
+}
+
+export default BaseLayerControl;

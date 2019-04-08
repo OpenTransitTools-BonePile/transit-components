@@ -3,14 +3,10 @@ import { Map, TileLayer } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import BaseLayerControl from './BaseLayerControl.jsx';
 
-export default class TransitMap extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      leafletMap: null,
-      baseLayer: props.config.baseLayers[1]
-    };
+class TransitMap extends React.Component {
+  state = {
+    leafletMap: null,
+    baseLayer: this.props.config.baseLayers[1]
   }
 
   componentDidMount() {
@@ -45,3 +41,5 @@ export default class TransitMap extends React.Component {
     );
   }
 }
+
+export default TransitMap;

@@ -3,10 +3,10 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
+  devtool: 'inline-source-map',
   entry: [
     './map/index.js',
   ],
-  devtool: 'inline-source-map',
   devServer: {
     host: 'localhost',
     contentBase: "./dist"
@@ -33,7 +33,7 @@ module.exports = {
             loader: 'babel-loader',
             query: {
               retainLines: true,
-              presets: ['env', 'react']
+              presets: ['env', 'react', 'stage-2']
             }
           }
         ]
