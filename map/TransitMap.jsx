@@ -1,10 +1,15 @@
 import React from 'react';
 import { Map, TileLayer } from 'react-leaflet';
-import { Marker, Popup } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import BaseLayerControl from './BaseLayerControl.jsx';
 import AllVehicles from '../vehicles/AllVehicles.jsx';
 
+import { Marker, Popup } from 'react-leaflet';
+import { divIcon } from "leaflet";
+
+const icon = divIcon({
+   html: "<span>X</span>",
+});
 
 class TransitMap extends React.Component {
   state = {
@@ -42,9 +47,9 @@ class TransitMap extends React.Component {
           </Control>
           {
             this.state.markers.map((position, idx) =>
-              <Marker key={`marker-${idx}`} position={position}>
+              <Marker icon={icon} key={'marker-${idx}'} position={position}>
                 <Popup>
-                  <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
+                  <span>A pretty CSS3 popup. <br /> Easily customizable.</span>
                 </Popup>
               </Marker>
             )

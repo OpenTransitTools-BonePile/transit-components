@@ -2,11 +2,11 @@ import React from 'react';
 
 class BaseLayerControl extends React.Component {
 
-  handleLeftPanClick() {
+  mapTiles() {
     this.props.map.setState({baseLayer: this.props.baseLayers[0]});
   }
 
-  handleRightPanClick() {
+  aerialTiles() {
     this.props.map.setState({baseLayer: this.props.baseLayers[1]});
   }
 
@@ -20,10 +20,10 @@ class BaseLayerControl extends React.Component {
         }}
       >
         <div id="blc">
-          <button onClick={() => this.handleLeftPanClick()}>
+          <button onClick={() => this.mapTiles()}>
             Map
           </button>
-          <button onClick={() => this.handleRightPanClick()}>
+          <button onClick={() => this.aerialTiles()}>
             Aerial
           </button>
         </div>
