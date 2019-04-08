@@ -32,7 +32,7 @@ class AllVehicles extends React.Component {
 
   render() {
     return(
-      <div>
+      <div class="vehicles">
       {
         this.state.vehicles.map((vehicle, idx) => {
           console.log(this.state.vehicles.length);
@@ -41,12 +41,13 @@ class AllVehicles extends React.Component {
           });
           const key = vehicle.vehicleID;
           const position = [vehicle.latitude, vehicle.longitude];
+
           return (
-          <Marker icon={icon} key={key} position={position}>
-            <Popup>
-              <span>VEH: {key}</span>
-            </Popup>
-          </Marker>
+            <Marker icon={icon} key={key} position={position}>
+              <Popup>
+                <span>VEH: {key}</span>
+              </Popup>
+            </Marker>
           );
         })
       }
