@@ -1,12 +1,16 @@
 import React from 'react';
 import { Map, TileLayer } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import BaseLayerControl from './BaseLayerControl.jsx';
+import AllVehicles from '../vehicles/AllVehicles.jsx';
+
 
 class TransitMap extends React.Component {
   state = {
     leafletMap: null,
-    baseLayer: this.props.config.baseLayers[1]
+    baseLayer: this.props.config.baseLayers[1],
+    markers: [this.props.center]
   }
 
   componentDidMount() {
@@ -36,6 +40,15 @@ class TransitMap extends React.Component {
           <Control position="topright">
             <BaseLayerControl map={this} baseLayers={this.props.config.baseLayers} />
           </Control>
+          {
+            this.state.markers.map((position, idx) =>
+              <Marker key={`marker-${idx}`} position={position}>
+                <Popup>
+                  <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
+                </Popup>
+              </Marker>
+            )
+          }
         </Map>
       </div>
     );
