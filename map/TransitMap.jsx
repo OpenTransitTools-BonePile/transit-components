@@ -28,8 +28,8 @@ export default class TransitMap extends React.Component {
       <div>
         <Map
           ref={m => { this.leafletMap = m; }}
-          center={[this.props.config.initLat, this.props.config.initLon]}
-          zoom={this.props.config.initZoom}
+          center={this.props.center}
+          zoom={this.props.zoom}
           maxZoom={this.props.config.maxZoom || "20"}
         >
           <TileLayer
