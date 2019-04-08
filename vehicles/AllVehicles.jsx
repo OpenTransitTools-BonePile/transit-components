@@ -1,5 +1,5 @@
 import React from 'react';
-import { Marker } from "react-leaflet";
+import { Marker, Popup } from "react-leaflet";
 import { divIcon } from "leaflet";
 
 class AllVehicles extends React.Component {
@@ -11,7 +11,7 @@ class AllVehicles extends React.Component {
     this.getVehicles();
     this.interval = setInterval(() => {
       this.getVehicles();
-    }, 15000);
+    }, 5000);
   }
 
   componentWillUnmount() {
@@ -27,28 +27,26 @@ class AllVehicles extends React.Component {
         this.setState({
           vehicles: res
         });
-        console.log(this.state.vehicles);
       });
   }
 
   render() {
-    console.log(this.state.vehicles);
-    return (() =>
+    return(
       <div>
       {
-
-        this.state.vehicles.map(vehicle => {
-          const { routeNumber, type } = vehicle;
+        this.state.vehicles.map((vehicle, idx) => {
+          console.log(this.state.vehicles.length);
           const icon = divIcon({
-            html: `<span>${routeNumber}</span>`,
+            html: `<span>${vehicle.routeNumber}</span>`,
           });
-
+          const key = vehicle.vehicleID;
+          const position = [vehicle.latitude, vehicle.longitude];
           return (
-            <Marker
-              icon={icon}
-              key={vehicle.vehicleID}
-              position={[vehicle.latitude, vehicle.longitude]}
-            />
+          <Marker icon={icon} key={key} position={position}>
+            <Popup>
+              <span>VEH: {key}</span>
+            </Popup>
+          </Marker>
           );
         })
       }

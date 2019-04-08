@@ -4,19 +4,11 @@ import Control from 'react-leaflet-control';
 import BaseLayerControl from './BaseLayerControl.jsx';
 import AllVehicles from '../vehicles/AllVehicles.jsx';
 
-import { Marker, Popup } from 'react-leaflet';
-import { divIcon } from "leaflet";
-
-const icon = divIcon({
-   html: "<span>X</span>",
-});
-
 class TransitMap extends React.Component {
   state = {
     leafletMap: null,
-    baseLayer: this.props.config.baseLayers[1],
-    markers: [this.props.center]
-  }
+    baseLayer: this.props.config.baseLayers[1]
+  };
 
   componentDidMount() {
     this.setState({leafletMap: this.leafletMap.leafletElement});
@@ -26,7 +18,7 @@ class TransitMap extends React.Component {
   // layers, and find a way to not render them in the layer switcher (e.g., config that as an
   // option -- buttons or layer switcher).
 
-  // TODO: maxZoom on the map should be 24, and layers should then not zoom beyond their spec'd max
+  // TODO: maxZoom on the map should be N (20 / 22); layers should then not zoom beyond their max
 
   render() {
     return (
@@ -45,15 +37,8 @@ class TransitMap extends React.Component {
           <Control position="topright">
             <BaseLayerControl map={this} baseLayers={this.props.config.baseLayers} />
           </Control>
-          {
-            this.state.markers.map((position, idx) =>
-              <Marker icon={icon} key={'marker-${idx}'} position={position}>
-                <Popup>
-                  <span>A pretty CSS3 popup. <br /> Easily customizable.</span>
-                </Popup>
-              </Marker>
-            )
-          }
+
+          <AllVehicles map={this} />
         </Map>
       </div>
     );
