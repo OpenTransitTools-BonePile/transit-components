@@ -1,6 +1,7 @@
 import React from 'react';
 import { Marker, Popup } from "react-leaflet";
 import { divIcon } from "leaflet";
+import './vehicles.css';
 
 class AllVehicles extends React.Component {
   state = {

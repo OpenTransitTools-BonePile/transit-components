@@ -5,6 +5,7 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack --progress --colors",
+    "serve": "cd dist && python -m SimpleHTTPServer 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Frank Purcell",
@@ -36,6 +37,7 @@
     "json-loader": "^0.5.7",
     "html-loader": "^0.5.5",
     "css-loader": "^2.1.1",
+    "style-loader": "^0.23.1",
 
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
