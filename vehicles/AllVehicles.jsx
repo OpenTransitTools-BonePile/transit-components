@@ -43,7 +43,7 @@ class AllVehicles extends React.Component {
           const position = [vehicle.latitude, vehicle.longitude];
 
           return (
-            <Marker icon={icon} key={key} position={position}>
+            <Marker class="marker" icon={icon} key={key} position={position}>
               <Popup>
                 <span>VEH: {key}</span>
               </Popup>
