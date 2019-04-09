@@ -3,6 +3,7 @@ import { Map, TileLayer } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import BaseLayerControl from './BaseLayerControl.jsx';
 import AllVehicles from '../vehicles/AllVehicles.jsx';
+import 'leaflet_css';
 
 class TransitMap extends React.Component {
   state = {
