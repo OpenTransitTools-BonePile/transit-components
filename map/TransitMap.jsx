@@ -1,9 +1,11 @@
 import React from 'react';
 import { Map, TileLayer } from 'react-leaflet';
+import 'leaflet_css';
+
 import Control from 'react-leaflet-control';
 import BaseLayerControl from './BaseLayerControl.jsx';
+import SelectVehicles from '../vehicles/SelectVehicles.jsx';
 import AllVehicles from '../vehicles/AllVehicles.jsx';
-import 'leaflet_css';
 
 class TransitMap extends React.Component {
   state = {
@@ -39,7 +41,7 @@ class TransitMap extends React.Component {
             <BaseLayerControl map={this} baseLayers={this.props.config.baseLayers} />
           </Control>
 
-          <AllVehicles map={this} />
+          <SelectVehicles map={this} />
         </Map>
       </div>
     );
