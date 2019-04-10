@@ -41,7 +41,7 @@ class TransitMap extends React.Component {
             <BaseLayerControl map={this} baseLayers={this.props.config.baseLayers} />
           </Control>
 
-          <SelectVehicles map={this} />
+          <SelectVehicles map={this} routeId={this.props.routeId} />
         </Map>
       </div>
     );

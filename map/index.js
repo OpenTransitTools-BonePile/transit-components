@@ -11,9 +11,10 @@ const urlParams = new URLSearchParams(window.location.search);
  */
 const zoom = urlParams.get("zoom") || config.map.initZoom;
 const ll = urlParams.get("center");
+const rte = urlParams.get("routeId") || "70";
 const ctr = ll ? ll.split(",") : [config.map.initLat, config.map.initLon];
 
 render(
-  <TransitMap config={config.map} center={ctr} zoom={zoom} />,
+  <TransitMap config={config.map} center={ctr} zoom={zoom} routeId={rte} />,
   document.getElementById('map'),
 );
