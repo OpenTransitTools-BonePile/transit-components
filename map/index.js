@@ -11,7 +11,7 @@ const urlParams = new URLSearchParams(window.location.search);
  */
 const zoom = urlParams.get("zoom") || config.map.initZoom;
 const ll = urlParams.get("center");
-const rte = urlParams.get("routeId") || "70";
+const rte = urlParams.get("routeId") || "20";
 const ctr = ll ? ll.split(",") : [config.map.initLat, config.map.initLon];
 
 render(

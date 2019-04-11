@@ -1,9 +1,11 @@
 import React from 'react';
 import { Map, TileLayer } from 'react-leaflet';
-import 'leaflet_css';
+import "leaflet/dist/leaflet.css";
 
 import Control from 'react-leaflet-control';
 import BaseLayerControl from './BaseLayerControl.jsx';
+import LocateControl from './LocateControl.jsx';
+
 import SelectVehicles from '../vehicles/SelectVehicles.jsx';
 import AllVehicles from '../vehicles/AllVehicles.jsx';
 
@@ -23,6 +25,17 @@ class TransitMap extends React.Component {
 
   // TODO: maxZoom on the map should be N (20 / 22); layers should then not zoom beyond their max
 
+  currentLocation() {
+    const locateOptions = {
+      position: 'topright',
+      strings: {
+          title: 'Show me where I am, yo!'
+      },
+      onActivate: () => {} // callback before engine starts retrieving locations
+    }
+    return locateOptions;
+  }
+
   render() {
     return (
       <div>
@@ -39,6 +52,7 @@ class TransitMap extends React.Component {
           />
           <Control position="topright">
             <BaseLayerControl map={this} baseLayers={this.props.config.baseLayers} />
+            <LocateControl options={this.currentLocation()} />
           </Control>
 
           <SelectVehicles map={this} routeId={this.props.routeId} />

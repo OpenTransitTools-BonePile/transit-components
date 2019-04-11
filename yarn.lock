@@ -3497,6 +3497,11 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
+leaflet.locatecontrol@^0.66.2:
+  version "0.66.2"
+  resolved "https://registry.yarnpkg.com/leaflet.locatecontrol/-/leaflet.locatecontrol-0.66.2.tgz#a99023b53a7b71d694b02efe4e8aeab7b1789202"
+  integrity sha512-33xCfRydyjLfh9nGvf4kSTM0tA1EFFgM0z4uj75QkUwIc9cz0vJqWABsyDirLm1GBKeEr8/krcnc10X1YuK7oA==
+
 leaflet@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.4.0.tgz#d5f56eeb2aa32787c24011e8be4c77e362ae171b"

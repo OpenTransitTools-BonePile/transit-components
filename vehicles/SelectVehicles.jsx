@@ -40,7 +40,7 @@ class SelectVehicles extends React.Component {
 
   render() {
     return(
-      <div class="vehicles">
+      <div className="vehicles">
       {
         this.state.vehicles.map((vehicle, idx) => {
           console.log(this.state.vehicles.length);
@@ -51,7 +51,7 @@ class SelectVehicles extends React.Component {
           const position = [vehicle.properties.lat, vehicle.properties.lon];
 
           return (
-            <Marker class="marker" icon={icon} key={key} position={position}>
+            <Marker icon={icon} key={key} position={position}>
               <Popup>
                 <span>VEH: {key}</span>
               </Popup>
