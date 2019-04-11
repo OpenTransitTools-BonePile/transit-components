@@ -1,1 +1,57 @@
-TBD
+[
+  {
+    "vehicle": "1111",
+    "mode": "BUS",
+    "destination": "20  Burnside\/Stark to Gresham TC via Portland City ter",
+    "timestamp": 1111111111111,
+
+    "lat": 45.5092,
+    "lon": -122.773568,
+    "heading": 104,
+    "lastPositionUpdate": 5,
+
+    "schedule": {
+      "lat": 45.5092,
+      "lon": -122.773568,
+      "heading": 104,
+
+      "prevStop": "zzz",
+      "prevStopSeq": 5,
+      "nextStop": "AAA",
+      "nextStopSeq": 6,
+      "status": "AAA"
+    },
+
+    "agencyName": "TriMet",
+    "agencyId": "TRIMET",
+    "routeShortName": "20",
+    "routeId": "20",
+    "trip": "1280",
+    "direction": "1",
+    "patternId": "",
+
+    "block": "2074"
+  },
+  {
+    "vehicle": "2222",
+    "lat": 45.5230657
+    "lon": -122.6791648,
+    "heading": 229,
+    "destination": "20  Burnside\/Stark to Beaverton TC",
+    "toStop": "AAA",
+    "seconds": 5,
+
+    "block": "2046"
+  },
+  {
+    "vehicle": "3333",
+    "lat": 45.522905,
+    "lon": -122.652963,
+    "heading": 74,
+    "destination": "20  Burnside\/Stark to Gresham TC",
+    "toStop": "AAA",
+    "seconds": 34,
+
+    "block": "2044"
+  }
+]
