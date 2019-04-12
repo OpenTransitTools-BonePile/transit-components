@@ -5,21 +5,32 @@
     "destination": "20  Burnside\/Stark to Gresham TC via Portland City ter",
     "timestamp": 1111111111111,
 
-    "lat": 45.5092,
-    "lon": -122.773568,
-    "heading": 104,
-    "lastUpdate": 5,
+    "realtime": {
+      "lat": 45.5092,
+      "lon": -122.773568,
+      "heading": 104,
+      "lastUpdate": 5
+    },
+    "scheduled": {
+      "lat": 45.5092,
+      "lon": -122.773568,
+      "heading": 104,
+
+      "prevStop": "zzz",
+      "prevStopSeq": 5,
+      "nextStop": "AAA",
+      "nextStopSeq": 6
+    },
 
     "agencyName": "TriMet",
     "agencyId": "TRIMET",
     "routeShortName": "20",
     "routeId": "20",
-    "tripId": "1280",
-    "directionId": "1",
+    "trip": "1280",
+    "direction": "1",
     "patternId": "",
-    "serviceId": "",
-    "serviceDay": 1555052400,
-    "blockId": "2074"
+
+    "block": "2074"
   },
   {
     "vehicle": "2222",
