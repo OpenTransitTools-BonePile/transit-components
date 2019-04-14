@@ -5,6 +5,13 @@
     "destination": "20  Burnside\/Stark to Gresham TC via Portland City ter",
     "timestamp": 1111111111111,
 
+
+    "stop": {
+      "prev": "1",
+      "next": "2",
+      "sequence": 1,
+      "total": 24
+    },
     "realtime": {
       "lat": 45.5092,
       "lon": -122.773568,

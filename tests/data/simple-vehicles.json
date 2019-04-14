@@ -3,44 +3,69 @@
     "vehicle": "1111",
     "mode": "BUS",
     "destination": "20  Burnside\/Stark to Gresham TC via Portland City ter",
-    "timestamp": 1111111111111,
+    "timestamp": 1555555555,
 
     "lat": 45.5092,
     "lon": -122.773568,
     "heading": 104,
     "lastUpdate": 5,
+    "realtimeState": "UPDATED",
 
     "agencyName": "TriMet",
     "agencyId": "TRIMET",
     "routeShortName": "20",
     "routeId": "20",
-    "tripId": "1280",
     "directionId": "1",
-    "patternId": "",
-    "serviceId": "",
-    "serviceDay": 1555052400,
-    "blockId": "2074"
+    "tripId": "8983916",
+    "blockId": "2074",
+    "patternId": "111",
+    "serviceId": "111",
+    "serviceDay": 1555052400
   },
   {
     "vehicle": "2222",
+    "mode": "BUS",
+    "destination": "20  Burnside\/Stark to Beaverton TC",
+    "timestamp": 1555555777,
+
     "lat": 45.5230657
     "lon": -122.6791648,
     "heading": 229,
-    "destination": "20  Burnside\/Stark to Beaverton TC",
-    "toStop": "AAA",
-    "seconds": 5,
+    "lastUpdate": 75,
+    "realtimeState": "SCHEDULED",
 
-    "block": "2046"
+    "agencyName": "TriMet",
+    "agencyId": "TRIMET",
+    "routeShortName": "20",
+    "routeId": "20",
+    "directionId": "1",
+    "tripId": "8983916",
+    "blockId": "2074",
+    "patternId": "111",
+    "serviceId": "111",
+    "serviceDay": 1555052400
   },
   {
     "vehicle": "3333",
+    "mode": "BUS",
+    "destination": "20  Burnside\/Stark to Gresham TC",
+    "timestamp": 1555555999,
+
     "lat": 45.522905,
     "lon": -122.652963,
     "heading": 74,
-    "destination": "20  Burnside\/Stark to Gresham TC",
-    "toStop": "AAA",
-    "seconds": 34,
+    "lastUpdate": 115,
+    "realtimeState": "SCHEDULED",
 
-    "block": "2044"
+    "agencyName": "TriMet",
+    "agencyId": "TRIMET",
+    "routeShortName": "20",
+    "routeId": "20",
+    "directionId": "1",
+    "tripId": "8983916",
+    "blockId": "2074",
+    "patternId": "111",
+    "serviceId": "111",
+    "serviceDay": 1555052400
   }
 ]
