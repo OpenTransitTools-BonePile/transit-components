@@ -27,7 +27,7 @@ class SelectVehicles extends React.Component {
     const d = Date.now();
     const r = this.props.routeId;  // (might have to strip off TriMet, etc...
 
-    fetch(`https://ride.trimet.org/rt/ws/V1/vehicles/appID/8EB2B259743166EF7569C6C78/epsg/EPSG:900913/?id=${r}&time=${d}`)
+    fetch(`http://maps7.trimet.org/vehicles/ws/V1/vehicles_via_route?id=${r}&time=${d}`)
       .then(res => {
         return res.json();
       })
