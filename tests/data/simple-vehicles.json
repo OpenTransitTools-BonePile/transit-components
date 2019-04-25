@@ -9,7 +9,9 @@
     "lon": -122.773568,
     "heading": 104,
     "lastUpdate": 5,
-    "realtimeState": "UPDATED",
+    "realtimeState": "SCHEDULED",
+    "stopId": "1",
+    "stopSeq": "1",
 
     "agencyName": "TriMet",
     "agencyId": "TRIMET",
@@ -32,7 +34,9 @@
     "lon": -122.6791648,
     "heading": 229,
     "lastUpdate": 75,
-    "realtimeState": "SCHEDULED",
+    "realtimeState": "STOPPED_AT",
+    "stopId": "2",
+    "stopSeq": "22",
 
     "agencyName": "TriMet",
     "agencyId": "TRIMET",
@@ -55,7 +59,7 @@
     "lon": -122.652963,
     "heading": 74,
     "lastUpdate": 115,
-    "realtimeState": "SCHEDULED",
+    "realtimeState": "IN_TRANSIT_TO",
 
     "agencyName": "TriMet",
     "agencyId": "TRIMET",
@@ -66,6 +70,8 @@
     "blockId": "2074",
     "patternId": "111",
     "serviceId": "111",
+    "stopId": "3",
+    "stopSeq": "33",
     "serviceDay": 1555052400
   }
 ]

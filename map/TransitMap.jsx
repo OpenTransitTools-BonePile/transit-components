@@ -8,6 +8,8 @@ import LocateControl from './LocateControl.jsx';
 
 import SelectVehicles from '../vehicles/SelectVehicles.jsx';
 import AllVehicles from '../vehicles/AllVehicles.jsx';
+import ErrorBoundary from '../common/ErrorBoundary.jsx';
+
 
 class TransitMap extends React.Component {
   state = {
@@ -55,7 +57,9 @@ class TransitMap extends React.Component {
             <LocateControl options={this.currentLocation()} />
           </Control>
 
-          <SelectVehicles map={this} routeId={this.props.routeId} />
+          <ErrorBoundary>
+            <SelectVehicles map={this} routeId={this.props.routeId} />
+          </ErrorBoundary>
         </Map>
       </div>
     );
