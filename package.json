@@ -16,6 +16,7 @@
 
     "leaflet": "^1.4.0",
     "leaflet.locatecontrol": "^0.66.2",
+    "leaflet-rotatedmarker": "^0.2.0",
     "react-leaflet": "^2.2.1",
     "react-leaflet-control": "^2.1.1"
   },

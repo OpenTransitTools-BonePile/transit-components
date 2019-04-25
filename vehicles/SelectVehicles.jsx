@@ -1,7 +1,11 @@
 import React from 'react';
 import { Marker, Popup } from "react-leaflet";
 import { divIcon } from "leaflet";
+import 'leaflet-rotatedmarker';
+
 import './vehicles.css';
+import './arrow.svg';
+
 
 class SelectVehicles extends React.Component {
   state = {
@@ -78,12 +82,19 @@ class SelectVehicles extends React.Component {
 
           const stopLink = `https://trimet.org/ride/stop.html?stop_id=${v.stopId}`;
 
-          const icon = divIcon({
+          const oicon = divIcon({
             html: `<span>${v.routeId}</span>`,
           });
 
+          const icon = L.icon({
+            iconUrl: require('./arrow.svg'),
+            iconSize: [40,40],
+            iconAnchor: [20, 20],
+          });
+
+
           return (
-            <Marker icon={icon} key={v.id} position={position}>
+            <Marker rotationAngle={v.heading} icon={icon} key={v.id} position={position} >
               <Popup>
                 <span><b>{v.destination}</b></span><br/>
                 <span>Last reported: {lastReport}</span><br/>
