@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class ErrorBoundary extends React.Component {
 
@@ -22,7 +21,6 @@ class ErrorBoundary extends React.Component {
     console.log("there was an error in a chile compoent of < ErrorBoundary >");
     this.setState({caughtError: true});
   }
-
 
   render() {
     return (

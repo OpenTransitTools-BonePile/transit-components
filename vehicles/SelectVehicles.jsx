@@ -33,7 +33,7 @@ class SelectVehicles extends React.Component {
       })
       .then(res => {
         this.setState({
-          vehicles: res.features
+          vehicles: res
         });
       });
   }
@@ -45,10 +45,10 @@ class SelectVehicles extends React.Component {
         this.state.vehicles.map((vehicle, idx) => {
           console.log(this.state.vehicles.length);
           const icon = divIcon({
-            html: `<span>${vehicle.properties.routeNumber}</span>`,
+            html: `<span>${vehicle.routeId}</span>`,
           });
-          const key = vehicle.properties.vehicleNumber;
-          const position = [vehicle.properties.lat, vehicle.properties.lon];
+          const key = vehicle.id;
+          const position = [vehicle.lat, vehicle.lon];
 
           return (
             <Marker icon={icon} key={key} position={position}>
