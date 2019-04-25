@@ -1,10 +1,12 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+
 import { Marker, Popup } from "react-leaflet";
-import { divIcon } from "leaflet";
+import 'leaflet';
 import 'leaflet-rotatedmarker';
+import BusIcon from './icons/bus-icon';
 
 import './vehicles.css';
-import './arrow.svg';
 
 
 class SelectVehicles extends React.Component {
@@ -82,19 +84,16 @@ class SelectVehicles extends React.Component {
 
           const stopLink = `https://trimet.org/ride/stop.html?stop_id=${v.stopId}`;
 
-          const oicon = divIcon({
+          const bus = L.divIcon({
             html: `<span>${v.routeId}</span>`,
           });
 
-          const icon = L.icon({
-            iconUrl: require('./arrow.svg'),
-            iconSize: [40,40],
-            iconAnchor: [20, 20],
+          const bus2 = L.divIcon({
+              html: ReactDOMServer.renderToString(<BusIcon/>)
           });
 
-
           return (
-            <Marker rotationAngle={v.heading} icon={icon} key={v.id} position={position} >
+            <Marker rotationAngle={v.heading} rotationOrigin='center center' icon={bus2} key={v.id} position={position} >
               <Popup>
                 <span><b>{v.destination}</b></span><br/>
                 <span>Last reported: {lastReport}</span><br/>

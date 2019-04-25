@@ -4,15 +4,14 @@
   -o-transition: all 3s ease-out;
   transition: all 3s ease-out;
 
-  border-radius: 15px;
-  border: 1px solid #FFF;
-  display: inline-block;
-  width: auto!important;
-  height: auto!important;
   width: 20px!important;
-  text-align: center;
   height: 20px!important;
   line-height: 20px;
-  color: #000;
-  font-weight: bold;
+  border-radius: 15px;
+  border: 1px solid #FFF;
+  background-color: #FFF;
+}
+
+.leaflet-marker-icon:hover {
+  background-color: orangered;
 }
