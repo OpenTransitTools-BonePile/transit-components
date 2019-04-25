@@ -42,18 +42,54 @@ class SelectVehicles extends React.Component {
     return(
       <div className="vehicles">
       {
-        this.state.vehicles.map((vehicle, idx) => {
+        this.state.vehicles.map((v, i) => {
           console.log(this.state.vehicles.length);
+
+          const position = [v.lat, v.lon];
+
+          var status = "unknown";
+          if(v.status == "IN_TRANSIT_TO")
+            status = "en-route to stop ";
+          else if(v.status == "STOPPED_AT")
+            if(v.stopSequence == 1)
+              status = "beginning route from stop ";
+            else
+              status = "stopped at ";
+
+          var lastReport = "";
+          if(v.seconds > 60) {
+            const min = Math.floor(v.seconds / 60);
+            const sec = v.seconds - min * 60;
+            const minStr = min == 1 ? "minute" : "minutes";
+
+            if(sec > 0)
+              lastReport = `${min} ${minStr} & ${sec} seconds ago`;
+            else
+              lastReport = `${min} ${minStr} ago`;
+          } else {
+            lastReport = `${v.seconds} seconds ago`;
+          }
+
+          var vehicle = "";
+          if(v.vehicleId.indexOf('+') > 0)
+            vehicle = "Vehicles: " + v.vehicleId.replace('+', ", ");
+          else
+            vehicle = "Vehicle: " + v.vehicleId;
+
+          const stopLink = `https://trimet.org/ride/stop.html?stop_id=${v.stopId}`;
+
           const icon = divIcon({
-            html: `<span>${vehicle.routeId}</span>`,
+            html: `<span>${v.routeId}</span>`,
           });
-          const key = vehicle.id;
-          const position = [vehicle.lat, vehicle.lon];
 
           return (
-            <Marker icon={icon} key={key} position={position}>
+            <Marker icon={icon} key={v.id} position={position}>
               <Popup>
-                <span>VEH: {key}</span>
+                <span><b>{v.destination}</b></span><br/>
+                <span>Last reported: {lastReport}</span><br/>
+                <span>Report date: {v.reportDate}</span><br/>
+                <span>Status: {status} <a target="#" href={stopLink}>{v.stopId}</a></span><br/>
+                <span>{vehicle}</span><br/>
               </Popup>
             </Marker>
           );
