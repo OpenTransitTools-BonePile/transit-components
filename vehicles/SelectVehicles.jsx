@@ -52,7 +52,7 @@ class SelectVehicles extends React.Component {
 
           const position = [v.lat, v.lon];
 
-          var status = "unknown";
+          let status = "unknown";
           if(v.status == "IN_TRANSIT_TO")
             status = "en-route to stop ";
           else if(v.status == "STOPPED_AT")
@@ -61,7 +61,7 @@ class SelectVehicles extends React.Component {
             else
               status = "stopped at ";
 
-          var lastReport = "";
+          let lastReport = "";
           if(v.seconds > 60) {
             const min = Math.floor(v.seconds / 60);
             const sec = v.seconds - min * 60;
@@ -75,7 +75,7 @@ class SelectVehicles extends React.Component {
             lastReport = `${v.seconds} seconds ago`;
           }
 
-          var vehicle = "";
+          let vehicle = "";
           if(v.vehicleId.indexOf('+') > 0)
             vehicle = "Vehicles: " + v.vehicleId.replace(/\+/g, ", ");
           else
@@ -84,8 +84,13 @@ class SelectVehicles extends React.Component {
           const stopLink = `https://trimet.org/ride/stop.html?stop_id=${v.stopId}`;
           const icon = makeVehicleIcon(v.routeType, v.routeShortName);
 
+          // todo: put this valid 360 deg in service
+          let heading = v.heading;
+          if(heading == null || heading <= 0 || heading >= 360)
+            heading = 1;
+
           return (
-            <RotatedMarker rotationAngle={v.heading} rotationOrigin={'center center'} icon={icon} key={v.id} position={position} >
+            <RotatedMarker rotationAngle={heading} rotationOrigin={'center center'} icon={icon} key={v.id} position={position} >
               <Popup>
                 <span><b>{v.routeLongName}</b></span><br/>
                 <span>Last reported: {lastReport}</span><br/>
