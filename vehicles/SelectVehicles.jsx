@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Marker, Popup } from "react-leaflet";
 import 'leaflet';
 import 'leaflet-rotatedmarker';
+import { Marker, Popup } from "react-leaflet";
+import RotatedMarker from '../map/RotatedMarker.jsx';
 import makeVehicleIcon from './icons';
-
 import './vehicles.css';
 
 
@@ -85,7 +85,7 @@ class SelectVehicles extends React.Component {
           const icon = makeVehicleIcon(v.routeType, v.routeShortName);
 
           return (
-            <Marker rotationAngle={v.heading} rotationOrigin='center center' icon={icon} key={v.id} position={position} >
+            <RotatedMarker rotationAngle={v.heading} rotationOrigin={'center center'} icon={icon} key={v.id} position={position} >
               <Popup>
                 <span><b>{v.routeLongName}</b></span><br/>
                 <span>Last reported: {lastReport}</span><br/>
@@ -93,7 +93,7 @@ class SelectVehicles extends React.Component {
                 <span>Status: {status} <a target="#" href={stopLink}>{v.stopId}</a></span><br/>
                 <span>{vehicle}</span><br/>
               </Popup>
-            </Marker>
+            </RotatedMarker>
           );
         })
       }

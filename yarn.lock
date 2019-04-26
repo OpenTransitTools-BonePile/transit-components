@@ -4622,6 +4622,13 @@ react-leaflet-control@^2.1.1:
   resolved "https://registry.yarnpkg.com/react-leaflet-control/-/react-leaflet-control-2.1.1.tgz#ed90006c9d285872a2788fe15c11fc30ad14cdb0"
   integrity sha512-3fx4uSRFtDaFNa1yq62DCxdc9kR3Lk4V7R0lHqbKfPTEIOvPR7VFvk3xzcSnSB/0LAYO8R96Pwcs1c6knyL/Hw==
 
+react-leaflet-rotatedmarker@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-leaflet-rotatedmarker/-/react-leaflet-rotatedmarker-0.1.0.tgz#954159ea7d663f927e16a0f9acc0c760b2329ae2"
+  integrity sha512-mzc3s04GsdkQHnWHbIF2/LhnUADuxpO89P4EQrmN57csu98tgUAcfRGUvetDn+ifyf6g+cLrcJs84jUMmaIjww==
+  dependencies:
+    leaflet-rotatedmarker "^0.2.0"
+
 react-leaflet@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-2.2.1.tgz#c33974f518ffc8b3b7221f72e00c28963b95314d"
