@@ -14,7 +14,7 @@ import ErrorBoundary from '../common/ErrorBoundary.jsx';
 class TransitMap extends React.Component {
   state = {
     leafletMap: null,
-    baseLayer: this.props.config.baseLayers[1]
+    baseLayer: this.props.config.baseLayers[this.props.config.baseLayersInitial || 0]
   };
 
   componentDidMount() {
@@ -58,7 +58,7 @@ class TransitMap extends React.Component {
           </Control>
 
           <ErrorBoundary>
-            <SelectVehicles map={this} routeId={this.props.routeId} />
+            <SelectVehicles map={this} config={this.props.config.vehicles} routeId={this.props.routeId} />
           </ErrorBoundary>
         </Map>
       </div>
