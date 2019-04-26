@@ -82,12 +82,12 @@ class SelectVehicles extends React.Component {
             vehicle = "Vehicle: " + v.vehicleId;
 
           const stopLink = `https://trimet.org/ride/stop.html?stop_id=${v.stopId}`;
-          const icon = makeVehicleIcon();
+          const icon = makeVehicleIcon(v.routeType, v.routeShortName);
 
           return (
             <Marker rotationAngle={v.heading} rotationOrigin='center center' icon={icon} key={v.id} position={position} >
               <Popup>
-                <span><b>{v.destination}</b></span><br/>
+                <span><b>{v.routeLongName}</b></span><br/>
                 <span>Last reported: {lastReport}</span><br/>
                 <span>Report date: {v.reportDate}</span><br/>
                 <span>Status: {status} <a target="#" href={stopLink}>{v.stopId}</a></span><br/>
