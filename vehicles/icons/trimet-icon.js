@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class TransitIcon extends Component {
+export default class TrimetIcon extends Component {
   render () {
     return (
       <svg viewBox='0 0 100.3 100.29' height='100%' width='100%'>

@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import {divIcon} from 'leaflet';
+import L from 'leaflet';
 
 import StreetcarIcon from './streetcar-icon';
 import BusIcon from './bus-icon';
 import GondolaIcon from './gondola-icon';
 import RailIcon from './rail-icon';
 import TramIcon from './tram-icon';
-import TransitIcon from './transit-icon';
 
 
 function makeVehicleIcon(mode, defStr) {
@@ -30,7 +29,7 @@ function makeVehicleIcon(mode, defStr) {
       icon = <RailIcon/>;
       break;
     default:
-      icon = <TransitIcon/>;
+      icon = <BusIcon/>;
       break;
   }
 
@@ -40,7 +39,7 @@ function makeVehicleIcon(mode, defStr) {
       html: ReactDOMServer.renderToString(icon)
     });
   else
-    retVal = divIcon({
+    retVal = L.divIcon({
       html: `<span>${defStr || 'fxp'}</span>`,
      });
 
