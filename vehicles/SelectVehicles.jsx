@@ -2,7 +2,7 @@ import React from 'react';
 
 import 'leaflet';
 import 'leaflet-rotatedmarker';
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup, Tooltip } from "react-leaflet";
 import RotatedMarker from '../map/RotatedMarker.jsx';
 import makeVehicleIcon from './icons';
 import './vehicles.css';
@@ -77,7 +77,7 @@ class SelectVehicles extends React.Component {
 
           var vehicle = "";
           if(v.vehicleId.indexOf('+') > 0)
-            vehicle = "Vehicles: " + v.vehicleId.replace('+', ", ");
+            vehicle = "Vehicles: " + v.vehicleId.replace(/\+/g, ", ");
           else
             vehicle = "Vehicle: " + v.vehicleId;
 
@@ -93,6 +93,9 @@ class SelectVehicles extends React.Component {
                 <span>Status: {status} <a target="#" href={stopLink}>{v.stopId}</a></span><br/>
                 <span>{vehicle}</span><br/>
               </Popup>
+              <Tooltip>
+                <span><b>{v.routeShortName}</b>: {lastReport}</span>
+              </Tooltip>
             </RotatedMarker>
           );
         })
