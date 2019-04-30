@@ -11,7 +11,7 @@ import TramIcon from './tram-icon';
 
 function makeVehicleIcon(mode, defStr) {
 
-  var icon = null;
+  let icon = null;
   switch(mode) {
     case "BUS":
       icon = <BusIcon/>;
@@ -33,7 +33,7 @@ function makeVehicleIcon(mode, defStr) {
       break;
   }
 
-  var retVal = null;
+  let retVal = null;
   if(mode != null)
     retVal = L.divIcon({
       html: ReactDOMServer.renderToString(icon)
