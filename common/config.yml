@@ -2,7 +2,7 @@ map:
   # Enabled map views
   # NOTE: 'vehicles' and 'views' is a RT-map specific ... here to make sure unused stuff don't break OTT map
   vehicles:
-    url: //maps7.trimet.org/vehicles/ws/V1/vehicles
+    url: //maps.trimet.org/gtfs/rt/vehicles
     refresh: 3
 
   views:
