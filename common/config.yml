@@ -4,6 +4,7 @@ map:
   vehicles:
     url: //maps.trimet.org/gtfs/rt/vehicles
     refresh: 3
+    default: 90,100,190,200,290,19,20,30,57
 
   views:
     - type: DEFAULT

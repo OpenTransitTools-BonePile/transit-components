@@ -30,7 +30,7 @@ class SelectVehicles extends React.Component {
 
   getVehicles() {
     const d = Date.now();
-    const r = this.props.routeId;  // (might have to strip off TriMet, etc...
+    const r = this.props.routeId || this.props.config.default;  // (might have to strip off TriMet, etc...
 
     fetch(`${this.props.config.url}/routes/${r}?time=${d}`)
       .then(res => {
