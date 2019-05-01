@@ -37,6 +37,7 @@ function makeVehicleIcon(mode, defStr) {
   if(mode != null)
     retVal = L.divIcon({
       html: ReactDOMServer.renderToString(icon),
+      className: 'vehicle-marker',
       iconSize: [22, 22]
     });
   else

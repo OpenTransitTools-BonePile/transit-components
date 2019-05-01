@@ -1,4 +1,4 @@
-.leaflet-marker-icon {
+.vehicle-marker {
   -webkit-transition: all 3s ease-out;
   -moz-transition: all 3s ease-out;
   -o-transition: all 3s ease-out;
@@ -9,6 +9,6 @@
   background-color: #FFF;
 }
 
-.leaflet-marker-icon:hover {
+.vehicle-marker:hover {
   background-color: orangered;
 }
