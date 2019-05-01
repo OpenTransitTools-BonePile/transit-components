@@ -4,9 +4,7 @@
   -o-transition: all 3s ease-out;
   transition: all 3s ease-out;
 
-  width: 20px!important;
-  height: 20px!important;
-  border-radius: 15px;
+  border-radius: 15px!important;
   border: 1px solid #FFF;
   background-color: #FFF;
 }

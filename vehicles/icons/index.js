@@ -36,7 +36,8 @@ function makeVehicleIcon(mode, defStr) {
   let retVal = null;
   if(mode != null)
     retVal = L.divIcon({
-      html: ReactDOMServer.renderToString(icon)
+      html: ReactDOMServer.renderToString(icon),
+      iconSize: [22, 22]
     });
   else
     retVal = L.divIcon({

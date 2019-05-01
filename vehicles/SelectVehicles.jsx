@@ -19,9 +19,21 @@ class SelectVehicles extends React.Component {
 
   componentDidMount() {
     this.getVehicles();
+
+    // get refresh values from config (default 5 seconds), and convert from secs to millisecs
+    let refresh = 5000;
+    if(this.props.config.refresh) {
+       let r = this.props.config.refresh;
+       if(r > 0 && r <= 100)
+         r = r * 1000;
+       if(r >= 1000 && r < 100000)
+         refresh = r;
+    }
+
+    // do the recurring refresh of the get vehicles AJAX call
     this.interval = setInterval(() => {
       this.getVehicles();
-    }, 5000);
+    }, refresh);
   }
 
   componentWillUnmount() {
@@ -86,7 +98,7 @@ class SelectVehicles extends React.Component {
 
           // todo: put this valid 360 deg in service
           let heading = v.heading;
-          if(heading == null || heading <= 0 || heading >= 360)
+          if(heading == null || heading < 0 || heading >= 360)
             heading = 1;
 
           return (
@@ -98,9 +110,11 @@ class SelectVehicles extends React.Component {
                 <span>Status: {status} <a target="#" href={stopLink}>{v.stopId}</a></span><br/>
                 <span>{vehicle}</span><br/>
               </Popup>
-              <Tooltip>
-                <span><b>{v.routeShortName}</b>: {lastReport}</span>
-              </Tooltip>
+              { (L.Browser.mobile !== true) &&
+                <Tooltip>
+                  <span><b>{v.routeShortName}</b>: {L.Browser.mobile} {lastReport}</span>
+                </Tooltip>
+              }
             </RotatedMarker>
           );
         })
