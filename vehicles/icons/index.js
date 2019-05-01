@@ -38,6 +38,8 @@ function makeVehicleIcon(mode, defStr) {
     retVal = L.divIcon({
       html: ReactDOMServer.renderToString(icon),
       className: 'vehicle-marker',
+      popupAnchor: [0, -11],
+      tooltipAnchor: [0, -11],
       iconSize: [22, 22]
     });
   else

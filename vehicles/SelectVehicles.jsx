@@ -112,7 +112,7 @@ class SelectVehicles extends React.Component {
               </Popup>
               { (L.Browser.mobile !== true) &&
                 <Tooltip>
-                  <span><b>{v.routeShortName}</b>: {L.Browser.mobile} {lastReport}</span>
+                  <span><b>{v.routeShortName}</b>: {lastReport}</span>
                 </Tooltip>
               }
             </RotatedMarker>
