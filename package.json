@@ -52,5 +52,9 @@
     "webpack-dev-server": "^3.2.1",
 
     "mastarm": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0"
   }
 }
