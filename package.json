@@ -4,12 +4,15 @@
   "description": "Reusable Transit iMap Component + simple map apps",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "webpack --progress --colors",
     "serve": "cd dist && python -m SimpleHTTPServer 8000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "mastarm lint",
+    "dist": "webpack --progress --colors",
+    "build":"mastarm prepublish lib:build"
   },
   "author": "Frank Purcell",
   "license": "MPL-2.0",
+  "main": "build/index.js",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -46,6 +49,8 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "html-webpack-plugin": "^3.2.0",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-dev-server": "^3.2.1",
+
+    "mastarm": "^5.0.0"
   }
 }
