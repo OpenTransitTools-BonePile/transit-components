@@ -7,7 +7,7 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: [
-    './map/index.js',
+    './lib/map/index.js',
   ],
   devServer: {
     host: 'localhost',
@@ -20,7 +20,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Simple Map',
-      template: './common/templates/simple.html',
+      template: './lib/common/templates/simple.html',
       filename: './index.html',
       inject: true
     }),
