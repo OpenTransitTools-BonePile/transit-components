@@ -31,6 +31,7 @@ Scratch pad for building transit map components in react
       option to put it in layer switcher or as buttons, etc...
    j) cleanup
    
-  
 
-
+FYI:
+   git update-index --assume-unchanged yarn.lock
+   
