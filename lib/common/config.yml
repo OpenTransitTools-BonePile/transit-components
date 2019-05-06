@@ -3,7 +3,7 @@ map:
   # NOTE: 'vehicles' and 'views' is a RT-map specific ... here to make sure unused stuff don't break OTT map
   vehicles:
     url: //maps.trimet.org/gtfs/rt/vehicles
-    refresh: 3
+    refresh: 5
     default: 90,100,190,200,290,19,20,30,57
 
   views:
