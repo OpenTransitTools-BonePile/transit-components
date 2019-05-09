@@ -13,8 +13,6 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactLeaflet = require("react-leaflet");
 
-require("leaflet/dist/leaflet.css");
-
 var _reactLeafletControl = _interopRequireDefault(require("react-leaflet-control"));
 
 var _BaseLayerControl = _interopRequireDefault(require("./BaseLayerControl"));
@@ -117,7 +115,6 @@ function (_React$Component) {
       }), _react.default.createElement(_LocateControl.default, {
         options: this.currentLocation()
       })), _react.default.createElement(_ErrorBoundary.default, null, _react.default.createElement(_SelectVehicles.default, {
-        map: this,
         config: this.props.config.vehicles,
         routeId: this.props.routeId
       }))));
