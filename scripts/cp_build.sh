@@ -1,3 +1,4 @@
+rm -rf build dist
 yarn build
 
 TO_DIR=../otp-react-redux/node_modules/transit-components/
