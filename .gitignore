@@ -7,6 +7,7 @@ logs
 *.out
 npm-debug.log*
 *~
+*#
 config.yml
 .DS_Store
 
