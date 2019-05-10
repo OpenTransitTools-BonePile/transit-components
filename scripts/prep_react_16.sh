@@ -1,3 +1,6 @@
+#
+# will reset the repo to use React 16
+#
 echo "PREP for React 16"
 
 if [ -d "node_modules" ]; then

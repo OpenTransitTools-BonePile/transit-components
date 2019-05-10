@@ -1,3 +1,8 @@
+#
+# will reset the repo to use React 15
+#
+echo "PREP for React 15"
+
 if [ -d "node_modules" ]; then
     if [ -d "nm_16" ]; then
         echo "There's already an nm_16 directory !!!"
