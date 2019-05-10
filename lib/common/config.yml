@@ -1,16 +1,41 @@
+#
+# TriMet MOD Map
+# Config built on: Tuesday, May 9, 2019 @ 9:44pm
+#
+
+# define timezone for arrival countdown to be accurate (to show a countdown time ala '6 minutes' vs. clock time)
+homeTimezone: America/Los_Angeles
+
+# react-router config, for URL routing (not to be confused with multimodal/OTP routing)
+# if app is to be deployed to a URL subdirectory (e.g. http://foo.bar/app), specify the path here:
+reactRouter:
+  basename: rn
+
+
+# OTP API
+api:
+  host: https://maps.trimet.org
+  path: /otp_mod
+
+
+# Enabled multimodal routing types (e.g. interary, profile)
+routingTypes:
+  - key: ITINERARY
+    text: Exact Time
+
+
+# Map config
 map:
-  # Enabled map views
   # NOTE: 'vehicles' and 'views' is a RT-map specific ... here to make sure unused stuff don't break OTT map
   vehicles:
     url: //maps.trimet.org/gtfs/rt/vehicles
     refresh: 5
-    default: 90,100,190,200,290,19,20,30,57
+    default: 90,100,190,200,290,19,20,30,57,70
 
+  # Enabled map views
   views:
     - type: DEFAULT
       text: Map View
-    - type: STYLIZED
-      text: Network View
 
   # Default map center
   initLat: 45.52
@@ -19,6 +44,7 @@ map:
   maxZoom: 22
 
   baseLayerButtons: true
+  baseLayersInitial: 0  # index of the array below -- 0 == Streets, 1 == Aerials, etc...
   baseLayers:
     - name: Streets
       url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/currentOSM/{z}/{x}/{y}
@@ -29,7 +55,6 @@ map:
       url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/hybridOSM/{z}/{x}/{y}
       attribution: 'Map tiles: <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
       maxZoom: 22
-  baseLayersInitial: 0  # index of the array above -- 0 == Streets, 1 == Aerials, etc...
 
   overlays:
     - type: bike-rental
@@ -43,16 +68,16 @@ map:
       api: //TODO:NOT_IN_MOD_CONFIG
       modes:
         - CAR_RENT
+      companies:
+        - CAR2GO
 
     - type: car-rental
       name: REACH NOW Locations
       api: //TODO:NOT_IN_MOD_CONFIG
       modes:
         - CAR_RENT
-
-    - type: zipcar
-      name: Zipcar Locations
-      api: https://modbeta.trimet.org/ws/carshare/zipcar/data.json
+      companies:
+        - REACHNOW
 
     - type: park-and-ride
       name: Park & Ride Locations
@@ -69,9 +94,14 @@ map:
       visible: true
 
 
-geocoder:
-  baseUrl: https://ws-st.trimet.org/pelias/v1
+    - type: zipcar
+      name: Zipcar Locations
+      api: https://betaplanner.trimet.org/ws/carshare/zipcar/data.json
 
+
+geocoder:
+  baseUrl: https://betaplanner.trimet.org/ws/solrwrap/v0/pelias
+  maxNearbyStops: 6
   boundary:
     rect:
       minLon: -123.2034
@@ -79,7 +109,58 @@ geocoder:
       minLat: 45.273
       maxLat: 45.7445
 
-  maxNearbyStops: 6
+
+# Mode selector configuration
+modes:
+  transitModes:
+    - mode: BUS
+      label: Bus
+    - mode: TRAM
+      label: MAX & Streetcar
+    - mode: RAIL
+      label: WES
+    - mode: GONDOLA
+      label: Aerial Tram
+
+  accessModes:
+    - mode: BICYCLE
+      label: Transit + Bike
+    - mode: BICYCLE_RENT
+      label: Transit + Biketown
+    - mode: CAR_PARK
+      label: Park & Ride
+    - mode: CAR_RENT
+      company: CAR2GO
+      label: Transit + car2go
+    - mode: CAR_RENT
+      company: REACHNOW
+      label: Transit + REACH NOW
+    - mode: CAR_HAIL
+      company: UBER
+      label: Transit + Uber
+      showWheelchairSetting: false
+
+  bicycleModes:
+    - mode: BICYCLE
+      label: Own Bike
+      iconWidth: 18
+    - mode: BICYCLE_RENT
+      label: Biketown
+      iconWidth: 36
+
+errorMessages:
+  - id: 404
+    msg: Sorry, we couldn't find any transit or rideshare/carshare options at the time you chose. Please try again later or change the departure/arrival time of your trip.
+    modes:
+      - CAR_HAIL
+      - CAR_RENT
+  - id: 405
+    msg: Sorry, we couldn't find any transit or rideshare/carshare options at the time you chose. Please try again later or change the departure/arrival time of your trip.
+    modes:
+      - CAR_HAIL
+      - CAR_RENT
+  - id: 480
+    msg: No available transit routes or rideshare/carshare service at origin.
 
 reportIssue:
   mailto: gis@trimet.org
@@ -87,14 +168,21 @@ reportIssue:
 analytics:
   facebook: z
   google:
-    globalSiteTag: UA-133677388-1
+    globalSiteTag: UA-688646-7
+
+language:
+  routeViewer: Route Viewer
+  tripViewer: Trip Viewer
+  stopViewer: TransitTracker
 
 dateTime:
-  timeFormat: h:mma
+  timeFormat: h:mm a
+  dateFormat: MM/DD/YYYY
+  longDateFormat: MMMM D, YYYY
 
-# TODO: rename this from 'alternateTransitIndex' to transitIndex in MOD? OR move to layers above?
-transitIndex:
-  apiRoot: https://modbeta.trimet.org/ws/ti/v0/
+# Alternate TransitIndex API
+alternateTransitIndex:
+  apiRoot: https://betaplanner.trimet.org/ws/ti/v0/
   services:
      - stops
      - stops/routes
