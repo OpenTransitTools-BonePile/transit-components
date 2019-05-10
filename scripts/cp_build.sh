@@ -1,7 +1,12 @@
 rm -rf build dist
 yarn build
 
-TO_DIR=../otp-react-redux/node_modules/transit-components/
-rm -rf /tmp/build
-mv $TO_DIR/build /tmp/
-cp -r build $TO_DIR
+for d in ../otp-react-redux ../otp-react-redux
+do
+  TC=$d/node_modules/transit-components/
+  mkdir -p $TC
+  rm -rf $TC/build
+  cp -r build $TC/
+  cp lib/common/config.yml $TC/lib/common/
+done
+
