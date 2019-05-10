@@ -1,3 +1,5 @@
+echo "PREP for React 16"
+
 if [ -d "node_modules" ]; then
     if [ -d "nm_15" ]; then
         echo "There's already an nm_15 directory !!!"
