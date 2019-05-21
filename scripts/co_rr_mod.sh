@@ -6,6 +6,9 @@ function checkout_update () {
   git checkout $B 
   git pull upstream $B
   git push
+
+  # make sure we switch back to master
+  git checkout master
   cd -
 }
 
@@ -40,4 +43,3 @@ checkout_update otp-react-redux dev
 
 # sync TM fork of MOD with original ibi repo (master branch)
 update_forked_repo trimet-mod-otp  https://github.com/ibi-group/trimet-mod-otp.git
-
