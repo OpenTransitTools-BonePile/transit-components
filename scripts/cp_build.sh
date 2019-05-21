@@ -7,7 +7,7 @@ MOD=trimet-mod-otp
 
 for d in $RR $MOD
 do
-  if [ ! -f ../$d/.git ]; then
+  if [ ! -d ../$d/.git ]; then
     echo "IMPORTANT NOTE: $d is not a git repo"
   else
     cd ../$d
@@ -17,7 +17,7 @@ do
     cd -
   fi
     
-  TC=../$d/node_modules/transit-components/
+  TC=../$d/node_modules/transit-components
   mkdir -p $TC
   rm -rf $TC/build
   cp -r build $TC/
