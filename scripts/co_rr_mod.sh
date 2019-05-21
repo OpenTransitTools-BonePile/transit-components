@@ -14,7 +14,9 @@ function update_forked_repo () {
   R=$1
   UP=$2
 
-  rm -rf ../$R
+  # NOTE: below removes any existing repos
+  #rm -rf ../$R
+
   if [ ! -d ../$R/.git ]; then
     # clone repo in parent dir
     cd ..
@@ -31,7 +33,11 @@ function update_forked_repo () {
 }
 
 
+# sync TM fork of OTP-RR with oritinal otp repo (master and dev branches)
 update_forked_repo otp-react-redux https://github.com/opentripplanner/otp-react-redux.git
 checkout_update otp-react-redux dev
 
+
+# sync TM fork of MOD with original ibi repo (master branch)
 update_forked_repo trimet-mod-otp  https://github.com/ibi-group/trimet-mod-otp.git
+
