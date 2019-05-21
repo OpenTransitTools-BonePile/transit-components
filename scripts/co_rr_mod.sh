@@ -3,7 +3,9 @@ function checkout_update () {
   B=$2
   cd ../$R/
   echo co up $B
-  git checkout $B && git pull upstream $B
+  git checkout $B 
+  git pull upstream $B
+  git push
   cd -
 }
 
