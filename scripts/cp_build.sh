@@ -10,6 +10,7 @@ function pull_build () {
   echo "PULL & INSTALL $R"
   git pull
   yarn install
+  yarn prepublish
   if [ $B == "BUILD" ]; then
     echo "BUILDING $R"
     yarn build
@@ -44,7 +45,7 @@ do
   if [ ! -d ../$d/.git ]; then
     echo "IMPORTANT NOTE: $d is not a git repo !!!!!"
   else
-    pull_build $d "DONT BUILD"
+    pull_build $d "DONT_BUILD"
   fi
 done
     
@@ -52,8 +53,8 @@ done
 update_nm_build $RR $TC
 
 # step 4: now re-build OTP-RR
-pull_build $RR
+pull_build $RR "DONT_BUILD"
 
 # step 5: copy OTP-RR build over to MOD and rebuild
 update_nm_build $MOD $RR
-pull_build $MOD
+#pull_build $MOD
