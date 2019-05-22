@@ -1,9 +1,11 @@
+#!/bin/bash
+
 function new_dev_branch () {
   D=$(date +"%m_%d_%Y")
   R=$1
   B=${2:-"vehicles"}-$D
 
-  echo checking out (new) branch $B
+  echo "checking out (new) branch $B"
 
   cd ../$R/
 
