@@ -1,6 +1,6 @@
 #
 # TriMet MOD Map
-# Config built on: Tuesday, May 9, 2019 @ 9:44pm
+# Config built on: Tuesday, May 21, 2019 @ 9:26pm
 #
 
 # define timezone for arrival countdown to be accurate (to show a countdown time ala '6 minutes' vs. clock time)
@@ -9,13 +9,13 @@ homeTimezone: America/Los_Angeles
 # react-router config, for URL routing (not to be confused with multimodal/OTP routing)
 # if app is to be deployed to a URL subdirectory (e.g. http://foo.bar/app), specify the path here:
 reactRouter:
-  basename: rn
+  basename: map
 
 
 # OTP API
 api:
   host: https://maps.trimet.org
-  path: /otp_mod
+  path: /otp_ct
 
 
 # Enabled multimodal routing types (e.g. interary, profile)
@@ -23,15 +23,16 @@ routingTypes:
   - key: ITINERARY
     text: Exact Time
 
+# Show/hide elevation profile chart for walk/bike legs
+elevationProfile: True
 
 # Map config
 map:
-  # NOTE: 'vehicles' and 'views' is a RT-map specific ... here to make sure unused stuff don't break OTT map
+  # real-time vehicles config
   vehicles:
-    #url: //maps.trimet.org/gtfs/rt/vehicles
     url: //maps.trimet.org/gtfs/rt/vehicles
     refresh: 5
-    default: '90,100,190,200,290,19,20,30,57,70'
+    default: 'all'
 
   # Enabled map views
   views:
@@ -43,30 +44,29 @@ map:
   initLon: -122.682
   initZoom: 12
   maxZoom: 22
-
+ 
   baseLayerButtons: true
   baseLayersInitial: 0  # index of the array below -- 0 == Streets, 1 == Aerials, etc...
+
+  # Base layers for default map
   baseLayers:
     - name: Streets
       url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/currentOSM/{z}/{x}/{y}
-      attribution: 'Map tiles: blah'
+      attribution: 'Map tiles: <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
       maxZoom: 20
-
     - name: Aerials
       url: //tile{s}.trimet.org/tilecache/tilecache.py/1.0.0/hybridOSM/{z}/{x}/{y}
       attribution: 'Map tiles: <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
-      maxZoom: 22
+      maxZoom: 20
 
   overlays:
     - type: bike-rental
       name: Biketown Locations
-      api: //TODO:NOT_IN_MOD_CONFIG
       modes:
         - BICYCLE_RENT
 
     - type: car-rental
-      name: REACH THERE Locations
-      api: //TODO:NOT_IN_MOD_CONFIG
+      name: car2go Locations
       modes:
         - CAR_RENT
       companies:
@@ -74,7 +74,6 @@ map:
 
     - type: car-rental
       name: REACH NOW Locations
-      api: //TODO:NOT_IN_MOD_CONFIG
       modes:
         - CAR_RENT
       companies:
@@ -82,16 +81,12 @@ map:
 
     - type: park-and-ride
       name: Park & Ride Locations
-      api: //TODO:NOT_IN_MOD_CONFIG
-      layer: 11
       maxTransitDistance: 1000
       modes:
         - CAR_PARK
 
     - type: stops
       name: Transit Stops
-      api: //TODO:NOT_IN_MOD_CONFIG
-      layer: 11
       visible: true
 
 
@@ -164,10 +159,9 @@ errorMessages:
     msg: No available transit routes or rideshare/carshare service at origin.
 
 reportIssue:
-  mailto: gis@trimet.org
+  mailto: hello@trimet.org
 
 analytics:
-  facebook: z
   google:
     globalSiteTag: UA-688646-7
 
