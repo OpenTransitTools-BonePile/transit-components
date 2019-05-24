@@ -28,11 +28,6 @@ elevationProfile: True
 
 # Map config
 map:
-  # real-time vehicles config
-  vehicles:
-    url: //maps.trimet.org/gtfs/rt/vehicles
-    refresh: 5
-    default: 'all'
 
   # Enabled map views
   views:
@@ -60,6 +55,12 @@ map:
       maxZoom: 20
 
   overlays:
+    - type: vehicles
+      name: Transit Vehicles
+      api: https://maps.trimet.org/gtfs/rt/vehicles
+        refresh: 5
+      default: 'all'
+
     - type: bike-rental
       name: Biketown Locations
       modes:
@@ -88,7 +89,6 @@ map:
     - type: stops
       name: Transit Stops
       visible: true
-
 
     - type: zipcar
       name: Zipcar Locations
