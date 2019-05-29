@@ -58,7 +58,7 @@ map:
     - type: vehicles
       name: Transit Vehicles
       api: https://maps.trimet.org/gtfs/rt/vehicles
-        refresh: 5
+      refresh: 5
       default: 'all'
 
     - type: bike-rental
