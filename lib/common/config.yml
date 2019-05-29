@@ -56,7 +56,7 @@ map:
 
   overlays:
     - type: vehicles
-      name: Transit Vehicles
+      name: Real-time Vehicles
       api: https://maps.trimet.org/gtfs/rt/vehicles
       refresh: 5
       default: 'all'
