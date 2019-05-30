@@ -27,6 +27,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -57,6 +59,8 @@ function (_React$Component) {
   _createClass(VehicleMarker, [{
     key: "render",
     value: function render() {
+      var _React$createElement;
+
       var v = this.props.vehicle;
       var position = [v.lat, v.lon];
       var status = "unknown";
@@ -75,20 +79,22 @@ function (_React$Component) {
       var vehicle = "";
       if (v.vehicleId.indexOf('+') > 0) vehicle = "Vehicles: " + v.vehicleId.replace(/\+/g, ", ");else vehicle = "Vehicle: " + v.vehicleId;
       var stopLink = "https://trimet.org/ride/stop.html?stop_id=".concat(v.stopId);
-      var icon = (0, _icons.default)(v.routeType, v.routeShortName); // todo: put this valid 360 deg in service
-
+      var icon = (0, _icons.default)(v.routeType, v.routeShortName);
       var heading = v.heading;
       if (heading == null || heading < 0 || heading >= 360) heading = 1;
-      return _react.default.createElement(_RotatedMarker.default, {
+      return _react.default.createElement(_RotatedMarker.default, (_React$createElement = {
+        key: "rm_" + this.props.key,
         rotationAngle: heading,
         rotationOrigin: 'center center',
-        icon: icon,
-        key: v.id,
-        position: position
-      }, _react.default.createElement(_reactLeaflet.Popup, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", lastReport), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
+        icon: icon
+      }, _defineProperty(_React$createElement, "key", v.id), _defineProperty(_React$createElement, "position", position), _React$createElement), _react.default.createElement(_reactLeaflet.Popup, {
+        key: "pop_" + this.props.key
+      }, _react.default.createElement("div", null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", lastReport), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
         target: "#",
         href: stopLink
-      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null)), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeShortName), ": ", lastReport)));
+      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null))), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, {
+        key: "tt_" + this.props.key
+      }, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeShortName), ": ", lastReport)));
     }
   }]);
 

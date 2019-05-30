@@ -9,9 +9,9 @@ require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
 
-var _react = _interopRequireDefault(require("react"));
-
 require("leaflet");
+
+var _react = _interopRequireDefault(require("react"));
 
 var _reactLeaflet = require("react-leaflet");
 
@@ -138,9 +138,15 @@ function (_MapLayer) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state.vehicles.length);
-      return _react.default.createElement(_reactLeaflet.FeatureGroup, null, this.state.vehicles.map(function (v) {
+      var vehicles = this.state.vehicles;
+      console.log(vehicles.length);
+      if (!vehicles || vehicles.length === 0) return _react.default.createElement(_reactLeaflet.FeatureGroup, {
+        id: "vehicles fg"
+      });else return _react.default.createElement(_reactLeaflet.FeatureGroup, {
+        id: "vehicles fg"
+      }, vehicles.map(function (v, i) {
         return _react.default.createElement(_VehicleMarker.default, {
+          key: "vm" + i,
           vehicle: v
         });
       }));
