@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("core-js/modules/es6.regexp.replace");
+
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
-
-require("core-js/modules/es6.regexp.replace");
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -22,6 +22,10 @@ var _reactLeaflet = require("react-leaflet");
 var _RotatedMarker = _interopRequireDefault(require("../map/RotatedMarker"));
 
 var _icons = _interopRequireDefault(require("./icons"));
+
+require("promise-polyfill/src/polyfill");
+
+require("whatwg-fetch");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45,8 +49,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var SelectVehicles =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(SelectVehicles, _React$Component);
+function (_MapLayer) {
+  _inherits(SelectVehicles, _MapLayer);
 
   function SelectVehicles() {
     var _getPrototypeOf2;
@@ -69,29 +73,50 @@ function (_React$Component) {
   }
 
   _createClass(SelectVehicles, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
+    key: "_startRefreshing",
+    value: function _startRefreshing() {
       var _this2 = this;
 
-      this.getVehicles(); // get refresh values from config (default 5 seconds), and convert from secs to millisecs
+      // initial vehicle refresh
+      this.getVehicles(); // get refresh values (default 10 seconds), and convert from secs to millisecs
 
-      var refresh = 5000;
+      var refresh = 10000;
 
-      if (this.props.config.refresh) {
-        var r = this.props.config.refresh;
+      if (this.props.refresh) {
+        var r = this.props.refresh;
         if (r > 0 && r <= 100) r = r * 1000;
         if (r >= 1000 && r < 100000) refresh = r;
       } // do the recurring refresh of the get vehicles AJAX call
 
 
-      this.interval = setInterval(function () {
+      this._refreshTimer = setInterval(function () {
         _this2.getVehicles();
       }, refresh);
     }
   }, {
+    key: "_stopRefreshing",
+    value: function _stopRefreshing() {
+      if (this._refreshTimer) clearInterval(this._refreshTimer);
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.visible) // ?? who sets this.props.visible
+        this._startRefreshing();
+    }
+  }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      clearInterval(this.interval);
+      this._stopRefreshing();
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (!this.props.visible && nextProps.visible) {
+        this._startRefreshing();
+      } else if (this.props.visible && !nextProps.visible) {
+        this._stopRefreshing();
+      }
     }
   }, {
     key: "getVehicles",
@@ -99,61 +124,89 @@ function (_React$Component) {
       var _this3 = this;
 
       var d = Date.now();
-      var r = this.props.routeId || this.props.config.default; // (might have to strip off TriMet, etc...
+      var r = this.props.routeId || this.props.default; // (might have to strip off TriMet, etc...
 
-      fetch("".concat(this.props.config.url, "/routes/").concat(r, "?time=").concat(d)).then(function (res) {
+      fetch("".concat(this.props.api, "/routes/").concat(r, "?time=").concat(d)).then(function (res) {
         return res.json();
       }).then(function (res) {
         _this3.setState({
           vehicles: res
         });
       });
-    }
+    } // need to implement create interface (and update interface for older React-Leaflet versions)
+
+  }, {
+    key: "createLeafletElement",
+    value: function createLeafletElement(props) {}
+  }, {
+    key: "updateLeafletElement",
+    value: function updateLeafletElement(props) {}
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
-
-      return _react.default.createElement("div", {
-        className: "vehicles"
-      }, this.state.vehicles.map(function (v, i) {
-        console.log(_this4.state.vehicles.length);
-        var position = [v.lat, v.lon];
-        var status = "unknown";
-        if (v.status == "IN_TRANSIT_TO") status = "en-route to stop ";else if (v.status == "STOPPED_AT") if (v.stopSequence == 1) status = "beginning route from stop ";else status = "stopped at ";
-        var lastReport = "";
-
-        if (v.seconds > 60) {
-          var min = Math.floor(v.seconds / 60);
-          var sec = v.seconds - min * 60;
-          var minStr = min == 1 ? "minute" : "minutes";
-          if (sec > 0) lastReport = "".concat(min, " ").concat(minStr, " & ").concat(sec, " seconds ago");else lastReport = "".concat(min, " ").concat(minStr, " ago");
-        } else {
-          lastReport = "".concat(v.seconds, " seconds ago");
-        }
-
-        var vehicle = "";
-        if (v.vehicleId.indexOf('+') > 0) vehicle = "Vehicles: " + v.vehicleId.replace(/\+/g, ", ");else vehicle = "Vehicle: " + v.vehicleId;
-        var stopLink = "https://trimet.org/ride/stop.html?stop_id=".concat(v.stopId);
-        var icon = (0, _icons.default)(v.routeType, v.routeShortName); // todo: put this valid 360 deg in service
-
-        var heading = v.heading;
-        if (heading == null || heading < 0 || heading >= 360) heading = 1;
-        return _react.default.createElement(_RotatedMarker.default, {
-          rotationAngle: heading,
-          rotationOrigin: 'center center',
-          icon: icon,
-          key: v.id,
-          position: position
-        }, _react.default.createElement(_reactLeaflet.Popup, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", lastReport), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
-          target: "#",
-          href: stopLink
-        }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null)), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeShortName), ": ", lastReport)));
+      //const createVehicleMarker = (v) =>
+      console.log(this.state.vehicles.length);
+      return _react.default.createElement(_reactLeaflet.FeatureGroup, null, this.state.vehicles.map(function (v) {
+        return _react.default.createElement(VehicleMarker, {
+          vehicle: v
+        });
       }));
     }
   }]);
 
   return SelectVehicles;
+}(_reactLeaflet.MapLayer);
+
+var VehicleMarker =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(VehicleMarker, _React$Component);
+
+  function VehicleMarker() {
+    _classCallCheck(this, VehicleMarker);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(VehicleMarker).apply(this, arguments));
+  }
+
+  _createClass(VehicleMarker, [{
+    key: "render",
+    value: function render() {
+      var v = this.props.vehicle;
+      var position = [v.lat, v.lon];
+      var status = "unknown";
+      if (v.status == "IN_TRANSIT_TO") status = "en-route to stop ";else if (v.status == "STOPPED_AT") if (v.stopSequence == 1) status = "beginning route from stop ";else status = "stopped at ";
+      var lastReport = "";
+
+      if (v.seconds > 60) {
+        var min = Math.floor(v.seconds / 60);
+        var sec = v.seconds - min * 60;
+        var minStr = min == 1 ? "minute" : "minutes";
+        if (sec > 0) lastReport = "".concat(min, " ").concat(minStr, " & ").concat(sec, " seconds ago");else lastReport = "".concat(min, " ").concat(minStr, " ago");
+      } else {
+        lastReport = "".concat(v.seconds, " seconds ago");
+      }
+
+      var vehicle = "";
+      if (v.vehicleId.indexOf('+') > 0) vehicle = "Vehicles: " + v.vehicleId.replace(/\+/g, ", ");else vehicle = "Vehicle: " + v.vehicleId;
+      var stopLink = "https://trimet.org/ride/stop.html?stop_id=".concat(v.stopId);
+      var icon = (0, _icons.default)(v.routeType, v.routeShortName); // todo: put this valid 360 deg in service
+
+      var heading = v.heading;
+      if (heading == null || heading < 0 || heading >= 360) heading = 1;
+      return _react.default.createElement(_RotatedMarker.default, {
+        rotationAngle: heading,
+        rotationOrigin: 'center center',
+        icon: icon,
+        key: v.id,
+        position: position
+      }, _react.default.createElement(_reactLeaflet.Popup, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", lastReport), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
+        target: "#",
+        href: stopLink
+      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null)), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeShortName), ": ", lastReport)));
+    }
+  }]);
+
+  return VehicleMarker;
 }(_react.default.Component);
 
 var _default = SelectVehicles;

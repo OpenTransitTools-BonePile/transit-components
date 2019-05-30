@@ -11,9 +11,13 @@ require("core-js/modules/es6.symbol");
 
 var _react = _interopRequireDefault(require("react"));
 
+var _leaflet = require("leaflet");
+
 var _reactLeaflet = require("react-leaflet");
 
-var _leaflet = require("leaflet");
+require("promise-polyfill/src/polyfill");
+
+require("whatwg-fetch");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -9,6 +9,8 @@ require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
 
+require("core-js/modules/es6.object.assign");
+
 var _react = _interopRequireDefault(require("react"));
 
 var _reactLeaflet = require("react-leaflet");
@@ -28,6 +30,8 @@ var _ErrorBoundary = _interopRequireDefault(require("../common/ErrorBoundary"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -107,17 +111,29 @@ function (_React$Component) {
         url: this.state.baseLayer.url,
         maxZoom: this.state.baseLayer.maxZoom,
         attribution: this.state.baseLayer.attribution
-      }), _react.default.createElement(_reactLeafletControl.default, {
+      }), _react.default.createElement(_ErrorBoundary.default, null, _react.default.createElement(_reactLeafletControl.default, {
         position: "topright"
       }, _react.default.createElement(_BaseLayerControl.default, {
         map: this,
         baseLayers: this.props.config.baseLayers
       }), _react.default.createElement(_LocateControl.default, {
         options: this.currentLocation()
-      })), _react.default.createElement(_ErrorBoundary.default, null, _react.default.createElement(_SelectVehicles.default, {
-        config: this.props.config.vehicles,
-        routeId: this.props.routeId
-      }))));
+      }))), _react.default.createElement(_reactLeaflet.LayersControl, {
+        position: "topright"
+      }, _react.default.createElement(_reactLeaflet.LayersControl.Overlay, {
+        name: "Feature group"
+      }, this.props.config.overlays && this.props.config.overlays.map(function (overlayConfig, k) {
+        switch (overlayConfig.type) {
+          case 'vehicles':
+            return _react.default.createElement(_ErrorBoundary.default, null, _react.default.createElement(_SelectVehicles.default, _extends({
+              visible: true,
+              key: k
+            }, overlayConfig)));
+
+          default:
+            return null;
+        }
+      })))));
     }
   }]);
 

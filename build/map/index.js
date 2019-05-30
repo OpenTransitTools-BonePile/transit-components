@@ -12,6 +12,8 @@ var _config = _interopRequireDefault(require("json-loader!yaml-loader!../common/
 
 var _TransitMap = _interopRequireDefault(require("./TransitMap"));
 
+require("url-search-params-polyfill");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var urlParams = new URLSearchParams(window.location.search);
