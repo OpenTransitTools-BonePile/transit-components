@@ -121,7 +121,7 @@ function (_React$Component) {
       }))), _react.default.createElement(_reactLeaflet.LayersControl, {
         position: "topright"
       }, _react.default.createElement(_reactLeaflet.LayersControl.Overlay, {
-        name: "Feature group"
+        name: "Realtime Vehicles"
       }, this.props.config.overlays && this.props.config.overlays.map(function (overlayConfig, k) {
         switch (overlayConfig.type) {
           case 'vehicles':

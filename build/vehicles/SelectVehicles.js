@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("core-js/modules/es6.regexp.replace");
-
 require("core-js/modules/es7.symbol.async-iterator");
 
 require("core-js/modules/es6.symbol");
@@ -15,13 +13,9 @@ var _react = _interopRequireDefault(require("react"));
 
 require("leaflet");
 
-require("leaflet-rotatedmarker");
-
 var _reactLeaflet = require("react-leaflet");
 
-var _RotatedMarker = _interopRequireDefault(require("../map/RotatedMarker"));
-
-var _icons = _interopRequireDefault(require("./icons"));
+var _VehicleMarker = _interopRequireDefault(require("./VehicleMarker"));
 
 require("promise-polyfill/src/polyfill");
 
@@ -144,10 +138,9 @@ function (_MapLayer) {
   }, {
     key: "render",
     value: function render() {
-      //const createVehicleMarker = (v) =>
       console.log(this.state.vehicles.length);
       return _react.default.createElement(_reactLeaflet.FeatureGroup, null, this.state.vehicles.map(function (v) {
-        return _react.default.createElement(VehicleMarker, {
+        return _react.default.createElement(_VehicleMarker.default, {
           vehicle: v
         });
       }));
@@ -156,58 +149,6 @@ function (_MapLayer) {
 
   return SelectVehicles;
 }(_reactLeaflet.MapLayer);
-
-var VehicleMarker =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(VehicleMarker, _React$Component);
-
-  function VehicleMarker() {
-    _classCallCheck(this, VehicleMarker);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(VehicleMarker).apply(this, arguments));
-  }
-
-  _createClass(VehicleMarker, [{
-    key: "render",
-    value: function render() {
-      var v = this.props.vehicle;
-      var position = [v.lat, v.lon];
-      var status = "unknown";
-      if (v.status == "IN_TRANSIT_TO") status = "en-route to stop ";else if (v.status == "STOPPED_AT") if (v.stopSequence == 1) status = "beginning route from stop ";else status = "stopped at ";
-      var lastReport = "";
-
-      if (v.seconds > 60) {
-        var min = Math.floor(v.seconds / 60);
-        var sec = v.seconds - min * 60;
-        var minStr = min == 1 ? "minute" : "minutes";
-        if (sec > 0) lastReport = "".concat(min, " ").concat(minStr, " & ").concat(sec, " seconds ago");else lastReport = "".concat(min, " ").concat(minStr, " ago");
-      } else {
-        lastReport = "".concat(v.seconds, " seconds ago");
-      }
-
-      var vehicle = "";
-      if (v.vehicleId.indexOf('+') > 0) vehicle = "Vehicles: " + v.vehicleId.replace(/\+/g, ", ");else vehicle = "Vehicle: " + v.vehicleId;
-      var stopLink = "https://trimet.org/ride/stop.html?stop_id=".concat(v.stopId);
-      var icon = (0, _icons.default)(v.routeType, v.routeShortName); // todo: put this valid 360 deg in service
-
-      var heading = v.heading;
-      if (heading == null || heading < 0 || heading >= 360) heading = 1;
-      return _react.default.createElement(_RotatedMarker.default, {
-        rotationAngle: heading,
-        rotationOrigin: 'center center',
-        icon: icon,
-        key: v.id,
-        position: position
-      }, _react.default.createElement(_reactLeaflet.Popup, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", lastReport), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
-        target: "#",
-        href: stopLink
-      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null)), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeShortName), ": ", lastReport)));
-    }
-  }]);
-
-  return VehicleMarker;
-}(_react.default.Component);
 
 var _default = SelectVehicles;
 exports.default = _default;
