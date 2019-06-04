@@ -82,6 +82,8 @@ function (_React$Component) {
       var icon = (0, _icons.default)(v.routeType, v.routeShortName);
       var heading = v.heading;
       if (heading == null || heading < 0 || heading >= 360) heading = 1;
+      var rsn = v.routeShortName;
+      if (rsn != null && rsn.length <= 3) rsn = "Line " + rsn;
       return _react.default.createElement(_RotatedMarker.default, (_React$createElement = {
         key: "rm_" + this.props.key,
         rotationAngle: heading,
@@ -92,9 +94,9 @@ function (_React$Component) {
       }, _react.default.createElement("div", null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", lastReport), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
         target: "#",
         href: stopLink
-      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null))), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, {
+      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Trip: ", v.tripId, ", Block: ", v.blockId), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null))), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, {
         key: "tt_" + this.props.key
-      }, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeShortName), ": ", lastReport)));
+      }, _react.default.createElement("span", null, _react.default.createElement("b", null, rsn), ": ", lastReport)));
     }
   }]);
 

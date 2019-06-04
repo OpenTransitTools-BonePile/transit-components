@@ -113,6 +113,21 @@ function (_MapLayer) {
       }
     }
   }, {
+    key: "isTimeStampNewer",
+    value: function isTimeStampNewer(ds) {
+      /** compares datestamp header of the data to last load's datestamp */
+      var retVal = true;
+
+      if (ds && !isNaN(ds)) {
+        // note: we set last ts only if the new ds is newer (larger), or if last ds is empty
+        if (this.state.lastTimeStamp) {
+          if (this.state.lastTimeStamp >= ds) retVal = false;else this.state.lastTimeStamp = ds;
+        } else this.state.lastTimeStamp = ds;
+      }
+
+      return retVal;
+    }
+  }, {
     key: "getVehicles",
     value: function getVehicles() {
       var _this3 = this;
@@ -121,10 +136,13 @@ function (_MapLayer) {
       var r = this.props.routeId || this.props.default; // (might have to strip off TriMet, etc...
 
       fetch("".concat(this.props.api, "/routes/").concat(r, "?time=").concat(d)).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        _this3.setState({
-          vehicles: res
+        var retVal = null;
+        var dlm = res.headers.get('Data-Last-Modified');
+        if (_this3.isTimeStampNewer(dlm)) retVal = res.json();
+        return retVal;
+      }).then(function (json) {
+        if (json != null) _this3.setState({
+          vehicles: json
         });
       });
     } // need to implement create interface (and update interface for older React-Leaflet versions)
