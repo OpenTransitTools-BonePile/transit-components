@@ -57,6 +57,7 @@ map:
   overlays:
     - type: vehicles
       name: Real-time Vehicles
+      apix: http://localhost:54145/vehicles
       api: https://maps.trimet.org/gtfs/rt/vehicles
       refresh: 5
       default: 'all'
