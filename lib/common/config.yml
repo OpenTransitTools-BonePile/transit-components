@@ -56,7 +56,7 @@ map:
 
   overlays:
     - type: vehicles
-      name: Real-time Vehicles
+      name: Real-Time Buses and Trains
       apix: http://localhost:54145/vehicles
       api: https://maps.trimet.org/gtfs/rt/vehicles
       refresh: 5
