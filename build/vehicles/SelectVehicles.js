@@ -90,13 +90,17 @@ function (_MapLayer) {
   }, {
     key: "_stopRefreshing",
     value: function _stopRefreshing() {
-      if (this._refreshTimer) clearInterval(this._refreshTimer);
+      if (this._refreshTimer) {
+        clearInterval(this._refreshTimer);
+        this.setBusy(false);
+      }
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      if (this.props.visible) // ?? who sets this.props.visible
+      if (this.props.visible) {
         this._startRefreshing();
+      }
     }
   }, {
     key: "componentWillUnmount",
@@ -113,19 +117,37 @@ function (_MapLayer) {
       }
     }
   }, {
-    key: "isTimeStampNewer",
-    value: function isTimeStampNewer(ds) {
+    key: "isNewer",
+    value: function isNewer(res) {
       /** compares datestamp header of the data to last load's datestamp */
       var retVal = true;
 
-      if (ds && !isNaN(ds)) {
-        // note: we set last ts only if the new ds is newer (larger), or if last ds is empty
-        if (this.state.lastTimeStamp) {
-          if (this.state.lastTimeStamp >= ds) retVal = false;else this.state.lastTimeStamp = ds;
-        } else this.state.lastTimeStamp = ds;
+      try {
+        var lm = res.headers.get('Last-Modified');
+        var lmd = new Date(lm);
+
+        if (this.lastModified === null) {
+          this.lastModified == lmd; // last modified is empty, so set it and say data is new
+
+          retVal = true;
+        } else {
+          if (this.lastTimeStamp > lmd) retVal = false;else this.lastTimeStamp = lmd;
+        }
+      } catch (e) {
+        console.log(e);
       }
 
       return retVal;
+    }
+  }, {
+    key: "isBusy",
+    value: function isBusy() {
+      return this._isBusy;
+    }
+  }, {
+    key: "setBusy",
+    value: function setBusy(val) {
+      this._isBusy = val;
     }
   }, {
     key: "getVehicles",
@@ -134,17 +156,24 @@ function (_MapLayer) {
 
       var d = Date.now();
       var r = this.props.routeId || this.props.default; // (might have to strip off TriMet, etc...
+      // wrap the fetch with
 
-      fetch("".concat(this.props.api, "/routes/").concat(r, "?time=").concat(d)).then(function (res) {
-        var retVal = null;
-        var dlm = res.headers.get('Data-Last-Modified');
-        if (_this3.isTimeStampNewer(dlm)) retVal = res.json();
-        return retVal;
-      }).then(function (json) {
-        if (json != null) _this3.setState({
-          vehicles: json
+      if (!this.isBusy()) {
+        this.setBusy(true);
+        fetch("".concat(this.props.api, "/routes/").concat(r, "?time=").concat(d)).then(function (res) {
+          var retVal = null;
+          if (_this3.isNewer(res)) retVal = res.json();
+          return retVal;
+        }).then(function (json) {
+          _this3.setBusy(false);
+
+          if (json != null) _this3.setState({
+            vehicles: json
+          });
         });
-      });
+      } else {
+        console.log("note: previous vehicle /q still running...will skip this update and wait (to avoid race-condition)");
+      }
     } // need to implement create interface (and update interface for older React-Leaflet versions)
 
   }, {
