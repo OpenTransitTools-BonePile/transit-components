@@ -24,16 +24,26 @@
         width: 100%;
       }
 
+      .vehicle-circle {
+        background: #000000; /* color of the circle */
+        border-radius: 50%; /* make the div a circular shape */
+        box-shadow: 4px 4px 3px grey; /* see http://www.w3schools.com/css/css3_shadows.asp */
+        -moz-box-shadow: 4px 4px 3px grey;
+        -webkit-box-shadow: 4px 4px 3px grey;
+      }
+
+      .vehicle-icon {
+        border-radius: 15px!important;
+        border: 1px solid #FFF;
+        background-color: #FFF;
+      }
+
       /* from vehicles.css -- need better way to have .css follow component */
       .vehicle-marker {
         -webkit-transition: all 3s ease-out;
         -moz-transition: all 3s ease-out;
         -o-transition: all 3s ease-out;
         transition: all 3s ease-out;
-
-        border-radius: 15px!important;
-        border: 1px solid #FFF;
-        background-color: #FFF;
       }
 
       .vehicle-marker:hover {
