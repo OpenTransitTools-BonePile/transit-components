@@ -22,6 +22,7 @@
     "leaflet-rotatedmarker": "^0.2.0",
     "react-leaflet": "^2.4.0",
     "react-leaflet-control": "^2.1.1",
+    "@mapbox/polyline": "^0.2.0",
 
     "url-search-params-polyfill": "^6.0.0",
     "promise-polyfill": "^8.1.0",
