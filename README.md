@@ -4,6 +4,8 @@ Services:
  - https://modbeta.trimet.org/vehicles/?routeId=all
  - https://maps.trimet.org/gtfs/rt/vehicles/routes/all
  - https://betaplanner.trimet.org/ws/ti/v0/index/routes
+ - https://maps7.trimet.org/ti/index/patterns/TriMet:420074/geometry/geojson
+ - https://maps7.trimet.org/ti/index/patterns/TriMet:420074/geometry
  - https://betaplanner.trimet.org/ws/ti/v0/index/patterns/TriMet:3/geometry
  - https://betaplanner.trimet.org/ws/ti/v0/index/patterns/TriMet:420074/geometry/geojson
  - https://maps.trimet.org/otp_mod/index/patterns/TriMet:0:xxxx/geometry/geojson (stupid OTP TI pattern numbered junk)
