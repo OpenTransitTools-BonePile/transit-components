@@ -23,7 +23,7 @@ var _tramIcon = _interopRequireDefault(require("./tram-icon"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function makeVehicleIcon(mode, defStr) {
+function makeVehicleIcon(cls, mode, defStr) {
   var icon = null;
 
   switch (mode) {
@@ -55,7 +55,7 @@ function makeVehicleIcon(mode, defStr) {
   var retVal = null;
   if (mode != null) retVal = _leaflet.default.divIcon({
     html: _server.default.renderToString(icon),
-    className: 'vehicle-marker',
+    className: cls,
     popupAnchor: [0, -11],
     tooltipAnchor: [0, -11],
     iconSize: [22, 22]

@@ -6,9 +6,9 @@ require("core-js/modules/es.symbol.description");
 
 require("core-js/modules/es.symbol.iterator");
 
-require("core-js/modules/es.array.iterator");
+require("core-js/modules/es.array.concat");
 
-require("core-js/modules/es.object.get-own-property-descriptor");
+require("core-js/modules/es.array.iterator");
 
 require("core-js/modules/es.object.get-prototype-of");
 
@@ -23,9 +23,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+require("leaflet");
+
+require("leaflet-rotatedmarker");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -45,35 +49,67 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var GondolaIcon =
+var VehicleTracker =
 /*#__PURE__*/
-function (_Component) {
-  _inherits(GondolaIcon, _Component);
+function (_React$Component) {
+  _inherits(VehicleTracker, _React$Component);
 
-  function GondolaIcon() {
-    _classCallCheck(this, GondolaIcon);
+  function VehicleTracker() {
+    var _getPrototypeOf2;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(GondolaIcon).apply(this, arguments));
+    var _temp, _this;
+
+    _classCallCheck(this, VehicleTracker);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(VehicleTracker)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      buttonText: "Track Vehicle"
+    }, _temp));
   }
 
-  _createClass(GondolaIcon, [{
+  _createClass(VehicleTracker, [{
+    key: "handleClick",
+    value: function handleClick() {
+      if (this.state.isTracking) {
+        this.setState({
+          isTracking: false,
+          buttonText: "Track Vehicle"
+        });
+        this.props.controller.setState({
+          trackedVehicle: null
+        });
+      } else {
+        this.setState({
+          isTracking: true,
+          buttonText: "Stop Tracking"
+        });
+        this.props.controller.setState({
+          trackedVehicle: this.props.vehicle
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("svg", {
-        version: "1.1",
-        viewBox: "0 0 32 32",
-        height: "100%",
-        width: "100%"
-      }, _react.default.createElement("path", {
-        d: "M24.9,17.2c-1.7-0.6-5.9-0.9-8-1.1V6.7l12.4,4.5V9.5l-7.7-2.8l0-1.3l-11.2-4l0,1.3L2.7,0v1.6l11.9,4.2v10.2L10,16 c0,0-3.8,0.4-6,3c-2.2,2.6-2.3,4.1-2.3,5.7c0,1.5,1.3,4.1,3.2,5.2c1.9,1.1,4.3,1.3,4.3,1.3L19.5,32c0,0,4.9-0.1,7.1-1.4 c1.6-1,3.7-2.5,3.7-6.3C30.3,20.5,27.8,18.2,24.9,17.2z M10.5,26.3H4.1c0,0-0.8-2.8,0.3-4.5c1.1-1.7,2-2.4,2-2.4l4.1,0.1V26.3z M18.9,26.3h-6.2v-6.9h6.2V26.3z M28.2,26.3h-7.1v-6.9h4.8c0,0,1,0.6,2,2.3C29,23.5,28.2,26.3,28.2,26.3z"
-      }));
+      var _this2 = this;
+
+      // This syntax ensures `this` is bound within handleClick
+      return _react.default.createElement("button", {
+        onClick: function onClick(e) {
+          return _this2.handleClick(e);
+        }
+      }, this.state.buttonText);
     }
   }]);
 
-  return GondolaIcon;
-}(_react.Component);
+  return VehicleTracker;
+}(_react.default.Component);
 
-exports.default = GondolaIcon;
+var _default = VehicleTracker;
+exports.default = _default;
 module.exports = exports.default;
 
-//# sourceMappingURL=gondola-icon.js
+//# sourceMappingURL=VehicleTracker.js

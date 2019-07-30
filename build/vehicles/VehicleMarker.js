@@ -1,23 +1,41 @@
 "use strict";
 
+require("core-js/modules/es.symbol");
+
+require("core-js/modules/es.symbol.description");
+
+require("core-js/modules/es.symbol.iterator");
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.get-prototype-of");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.string.iterator");
+
+require("core-js/modules/es.string.replace");
+
+require("core-js/modules/web.dom-collections.iterator");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-require("core-js/modules/es7.symbol.async-iterator");
-
-require("core-js/modules/es6.symbol");
-
-require("core-js/modules/es6.regexp.replace");
-
 var _react = _interopRequireDefault(require("react"));
 
-require("leaflet");
+var _leaflet = require("leaflet");
 
 require("leaflet-rotatedmarker");
 
 var _reactLeaflet = require("react-leaflet");
+
+var _VehicleTracker = _interopRequireDefault(require("./VehicleTracker"));
 
 var _RotatedMarker = _interopRequireDefault(require("../map/RotatedMarker"));
 
@@ -26,8 +44,6 @@ var _icons = _interopRequireDefault(require("./icons"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -57,14 +73,8 @@ function (_React$Component) {
   }
 
   _createClass(VehicleMarker, [{
-    key: "render",
-    value: function render() {
-      var _React$createElement;
-
-      var v = this.props.vehicle;
-      var position = [v.lat, v.lon];
-      var status = "unknown";
-      if (v.status == "IN_TRANSIT_TO") status = "en-route to stop ";else if (v.status == "STOPPED_AT") if (v.stopSequence == 1) status = "beginning route from stop ";else status = "stopped at ";
+    key: "getLastReportDate",
+    value: function getLastReportDate(v) {
       var lastReport = "";
 
       if (v.seconds > 60) {
@@ -76,34 +86,97 @@ function (_React$Component) {
         lastReport = "".concat(v.seconds, " seconds ago");
       }
 
+      return lastReport;
+    }
+  }, {
+    key: "makeToolTip",
+    value: function makeToolTip() {
+      var v = this.props.vehicle;
+      var rsn = v.routeShortName;
+      if (rsn != null && rsn.length <= 3) rsn = "Line " + rsn;
+      return _react.default.createElement(_reactLeaflet.Tooltip, null, _react.default.createElement("span", null, _react.default.createElement("b", null, rsn), ": ", this.getLastReportDate(v)));
+    }
+  }, {
+    key: "makePopup",
+    value: function makePopup() {
+      var v = this.props.vehicle;
+      var status = "unknown";
+      if (v.status == "IN_TRANSIT_TO") status = "en-route to stop ";else if (v.status == "STOPPED_AT") if (v.stopSequence == 1) status = "beginning route from stop ";else status = "stopped at ";
       var vehicle = "";
       if (v.vehicleId.indexOf('+') > 0) vehicle = "Vehicles: " + v.vehicleId.replace(/\+/g, ", ");else vehicle = "Vehicle: " + v.vehicleId;
       var stopLink = "https://trimet.org/ride/stop.html?stop_id=".concat(v.stopId);
-      var icon = (0, _icons.default)(v.routeType, v.routeShortName);
-      var heading = v.heading;
-      if (heading == null || heading < 0 || heading >= 360) heading = 1;
-      var rsn = v.routeShortName;
-      if (rsn != null && rsn.length <= 3) rsn = "Line " + rsn;
-      return _react.default.createElement(_RotatedMarker.default, (_React$createElement = {
-        key: "rm_" + this.props.key,
-        rotationAngle: heading,
-        rotationOrigin: 'center center',
-        icon: icon
-      }, _defineProperty(_React$createElement, "key", v.id), _defineProperty(_React$createElement, "position", position), _React$createElement), _react.default.createElement(_reactLeaflet.Popup, {
-        key: "pop_" + this.props.key
-      }, _react.default.createElement("div", null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", lastReport), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
+      return _react.default.createElement(_reactLeaflet.Popup, null, _react.default.createElement("div", null, _react.default.createElement("span", null, _react.default.createElement("b", null, v.routeLongName)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Last reported: ", this.getLastReportDate(v)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Report date: ", v.reportDate), _react.default.createElement("br", null), _react.default.createElement("span", null, "Status: ", status, " ", _react.default.createElement("a", {
         target: "#",
         href: stopLink
-      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Trip: ", v.tripId, ", Block: ", v.blockId), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), _react.default.createElement("br", null))), L.Browser.mobile !== true && _react.default.createElement(_reactLeaflet.Tooltip, {
-        key: "tt_" + this.props.key
-      }, _react.default.createElement("span", null, _react.default.createElement("b", null, rsn), ": ", lastReport)));
+      }, v.stopId)), _react.default.createElement("br", null), _react.default.createElement("span", null, "Trip: ", v.tripId, ", Block: ", v.blockId), _react.default.createElement("br", null), _react.default.createElement("span", null, vehicle), " ", _react.default.createElement("br", null), _react.default.createElement(_VehicleTracker.default, {
+        vehicle: v,
+        marker: this,
+        controller: this.props.controller
+      }), "  ", _react.default.createElement("br", null)));
+    }
+  }, {
+    key: "makeCircleMarker",
+    value: function makeCircleMarker(size) {
+      var v = this.props.vehicle;
+      var position = [v.lat, v.lon];
+      var strokeColor = v.colorText || 'white';
+      var fillColor = v.color || 'black';
+      var classnames = 'vehicle-marker vehicle-circle';
+      var icon = (0, _leaflet.divIcon)({
+        className: classnames,
+        iconSize: [size, size]
+      });
+      return _react.default.createElement(_reactLeaflet.Marker, {
+        icon: icon,
+        position: position
+      }, this.makePopup(), L.Browser.mobile !== true && this.makeToolTip());
+    }
+  }, {
+    key: "makeRotatedMarker",
+    value: function makeRotatedMarker() {
+      var v = this.props.vehicle;
+      var icon = (0, _icons.default)('vehicle-marker vehicle-icon', v.routeType, v.routeShortName);
+      var position = [v.lat, v.lon];
+      var heading = v.heading;
+      if (heading == null || heading < 0 || heading >= 360) heading = 0;
+      return _react.default.createElement(_RotatedMarker.default, {
+        rotationAngle: heading,
+        rotationOrigin: 'center center',
+        icon: icon,
+        position: position
+      }, this.makePopup(), L.Browser.mobile !== true && this.makeToolTip());
+    }
+  }, {
+    key: "getZoom",
+    value: function getZoom() {
+      var retVal = 15;
+
+      try {
+        var zoom = this.props.leaflet.map.getZoom();
+        retVal = zoom;
+      } catch (e) {// console.log(e);
+      }
+
+      return retVal;
+    }
+  }, {
+    key: "makeMarker",
+    value: function makeMarker() {
+      var zoom = this.getZoom();
+      if (zoom >= this.props.closeZoom) return this.makeRotatedMarker();else if (zoom >= this.props.midZoom) return this.makeCircleMarker(13.0);else if (zoom >= this.props.farZoom) return this.makeCircleMarker(9.0);else return this.makeCircleMarker(5.0);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return this.makeMarker();
     }
   }]);
 
   return VehicleMarker;
 }(_react.default.Component);
 
-var _default = VehicleMarker;
+var _default = (0, _reactLeaflet.withLeaflet)(VehicleMarker);
+
 exports.default = _default;
 module.exports = exports.default;
 

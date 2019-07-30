@@ -1,13 +1,31 @@
 "use strict";
 
+require("core-js/modules/es.symbol");
+
+require("core-js/modules/es.symbol.description");
+
+require("core-js/modules/es.symbol.iterator");
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.get-prototype-of");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.promise");
+
+require("core-js/modules/es.string.iterator");
+
+require("core-js/modules/web.dom-collections.iterator");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
-require("core-js/modules/es7.symbol.async-iterator");
-
-require("core-js/modules/es6.symbol");
 
 require("leaflet");
 
@@ -16,6 +34,8 @@ var _react = _interopRequireDefault(require("react"));
 var _reactLeaflet = require("react-leaflet");
 
 var _VehicleMarker = _interopRequireDefault(require("./VehicleMarker"));
+
+var _VehicleGeometry = _interopRequireDefault(require("./VehicleGeometry"));
 
 require("promise-polyfill/src/polyfill");
 
@@ -41,6 +61,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function catchFetchErrors(response) {
+  // :see: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+
+  return response;
+}
+
 var SelectVehicles =
 /*#__PURE__*/
 function (_MapLayer) {
@@ -58,15 +87,48 @@ function (_MapLayer) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(SelectVehicles)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      selected_routes: [],
-      selected_stop: null,
-      vehicles: [],
-      route_data: [] // TBD Array of <RouteData > components, which comprise route and stop geo data
-
-    }, _temp));
+      selectedRoutes: [],
+      selectedStop: null,
+      routeData: [],
+      // TBD Array of <RouteData > components, which comprise route and stop geo data
+      mapZoom: 0,
+      trackedVehicle: null,
+      vehicles: []
+    }, _this.closeZoom = 15, _this.midZoom = 13, _this.farZoom = 10, _temp));
   }
 
   _createClass(SelectVehicles, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.visible) {
+        this._startRefreshing();
+      }
+
+      this.enableCallBacks();
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this._stopRefreshing();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.setAnimationClass(true);
+      this.trackVehicle();
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (!this.props.visible && nextProps.visible) {
+        this._startRefreshing();
+      } else if (this.props.visible && !nextProps.visible) {
+        this._stopRefreshing();
+      }
+
+      this.enableCallBacks();
+    }
+  }, {
     key: "_startRefreshing",
     value: function _startRefreshing() {
       var _this2 = this;
@@ -96,45 +158,76 @@ function (_MapLayer) {
       }
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
+    key: "trackVehicle",
+    value: function trackVehicle() {
+      if (this.state.trackedVehicle != null && this.state.trackedVehicle.id != null) {
+        var v = this.findVehicle(this.state.trackedVehicle.id);
+
+        if (v != null) {
+          var ll = [v.lat, v.lon];
+          this.props.leaflet.map.setView(ll);
+          this.state.trackedVehicle = v; // update the state with newest vehicle
+        }
+      }
+    }
+  }, {
+    key: "setAnimationClass",
+    value: function setAnimationClass(doAnimate) {
+      var animateClass = 'vehicle-animate';
+      var markers = document.getElementsByClassName("vehicle-marker");
+
+      for (var i = 0; i < markers.length; i++) {
+        if (doAnimate) markers[i].classList.add(animateClass);else markers[i].classList.remove(animateClass);
+      }
+
+      var z = 1;
+    }
+  }, {
+    key: "startZoomCB",
+    value: function startZoomCB() {
       if (this.props.visible) {
-        this._startRefreshing();
+        this.setAnimationClass(false);
       }
     }
   }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this._stopRefreshing();
+    key: "endZoomCB",
+    value: function endZoomCB() {
+      if (this.props.visible) {
+        // set state, so that markers will redraw on zoom
+        // TODO: if calling setState here is perf-problematic, could call setState only on this.closeZoom = (zoom / zoom-1)
+        var zoom = this.props.leaflet.map.getZoom();
+        this.setState({
+          mapZoom: zoom
+        });
+        this.setAnimationClass(true);
+      }
     }
   }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
-      if (!this.props.visible && nextProps.visible) {
-        this._startRefreshing();
-      } else if (this.props.visible && !nextProps.visible) {
-        this._stopRefreshing();
-      }
+    key: "enableCallBacks",
+    value: function enableCallBacks() {
+      var _this3 = this;
+
+      this.props.leaflet.map.on('zoomstart', function () {
+        _this3.startZoomCB('start');
+      });
+      this.props.leaflet.map.on('zoomend', function () {
+        _this3.endZoomCB('end');
+      });
     }
   }, {
     key: "isNewer",
     value: function isNewer(res) {
       /** compares datestamp header of the data to last load's datestamp */
       var retVal = true;
+      var lm = res.headers.get('Last-Modified');
+      var lmd = new Date(lm);
 
-      try {
-        var lm = res.headers.get('Last-Modified');
-        var lmd = new Date(lm);
+      if (this.lastModified === null) {
+        this.lastModified == lmd; // last modified is empty, so set it and say data is new
 
-        if (this.lastModified === null) {
-          this.lastModified == lmd; // last modified is empty, so set it and say data is new
-
-          retVal = true;
-        } else {
-          if (this.lastTimeStamp > lmd) retVal = false;else this.lastTimeStamp = lmd;
-        }
-      } catch (e) {
-        console.log(e);
+        retVal = true;
+      } else {
+        if (this.lastTimeStamp > lmd) retVal = false;else this.lastTimeStamp = lmd;
       }
 
       return retVal;
@@ -150,29 +243,53 @@ function (_MapLayer) {
       this._isBusy = val;
     }
   }, {
+    key: "findVehicle",
+    value: function findVehicle(id) {
+      var retVal = null;
+
+      try {
+        for (var i = 0; i < this.state.vehicles.length; i++) {
+          var v = this.state.vehicles[i];
+
+          if (v.id == id) {
+            retVal = v;
+            break;
+          }
+        }
+      } catch (e) {
+        console.log("ERROR findVehicle " + id + " " + e);
+      }
+
+      return retVal;
+    }
+  }, {
     key: "getVehicles",
     value: function getVehicles() {
-      var _this3 = this;
+      var _this4 = this;
 
       var d = Date.now();
       var r = this.props.routeId || this.props.default; // (might have to strip off TriMet, etc...
       // wrap the fetch with
 
       if (!this.isBusy()) {
-        this.setBusy(true);
-        fetch("".concat(this.props.api, "/routes/").concat(r, "?time=").concat(d)).then(function (res) {
+        this.setBusy(true); // eg: https://maps.trimet.org/gtfs/rt/vehicles/routes/100
+
+        fetch("".concat(this.props.api, "/routes/").concat(r, "?time=").concat(d)).then(catchFetchErrors).then(function (res) {
           var retVal = null;
-          if (_this3.isNewer(res)) retVal = res.json();
+          if (_this4.isNewer(res)) retVal = res.json();
           return retVal;
         }).then(function (json) {
-          _this3.setBusy(false);
+          _this4.setBusy(false);
 
-          if (json != null) _this3.setState({
+          if (json != null) _this4.setState({
             vehicles: json
           });
+        }).catch(function (error) {
+          _this4.setBusy(false); // unlock the busy flag on errors
+
+
+          console.log("VEH fetch() error: " + error);
         });
-      } else {
-        console.log("note: previous vehicle /q still running...will skip this update and wait (to avoid race-condition)");
       }
     } // need to implement create interface (and update interface for older React-Leaflet versions)
 
@@ -181,21 +298,33 @@ function (_MapLayer) {
     value: function createLeafletElement(props) {}
   }, {
     key: "updateLeafletElement",
-    value: function updateLeafletElement(props) {}
+    value: function updateLeafletElement(props) {} // TODO: turn off animate css
+    // this.context.map.on('moveend', () => {
+    // { /* see below: https://react-leaflet.js.org/docs/en/context.html */ }
+    // <LeafletConsumer>{context => console.log(context)}</LeafletConsumer>
+
   }, {
     key: "render",
     value: function render() {
+      var _this5 = this;
+
       var vehicles = this.state.vehicles;
       console.log(vehicles.length);
       if (!vehicles || vehicles.length === 0) return _react.default.createElement(_reactLeaflet.FeatureGroup, {
         id: "vehicles fg"
       });else return _react.default.createElement(_reactLeaflet.FeatureGroup, {
         id: "vehicles fg"
-      }, vehicles.map(function (v, i) {
+      }, vehicles.map(function (v) {
         return _react.default.createElement(_VehicleMarker.default, {
-          key: "vm" + i,
-          vehicle: v
+          key: v.id,
+          vehicle: v,
+          controller: _this5,
+          closeZoom: _this5.closeZoom,
+          midZoom: _this5.midZoom,
+          farZoom: _this5.farZoom
         });
+      }), _react.default.createElement(_VehicleGeometry.default, {
+        trackedVehicle: this.state.trackedVehicle
       }));
     }
   }]);
@@ -203,7 +332,8 @@ function (_MapLayer) {
   return SelectVehicles;
 }(_reactLeaflet.MapLayer);
 
-var _default = SelectVehicles;
+var _default = (0, _reactLeaflet.withLeaflet)(SelectVehicles);
+
 exports.default = _default;
 module.exports = exports.default;
 
