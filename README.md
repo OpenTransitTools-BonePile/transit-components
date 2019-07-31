@@ -15,16 +15,16 @@ Vehicle Apps & Services:
 
 Backport to React 15:
 --
- a. check out master
- b. run scripts/make_new_dev_branch.sh
- c. grab package.json with the React 15.0 dependencies from another branch on github
- d. replace withLeaflet hook (5 places in map & vehicles) with function withLeaflet(x) {return x;}
- e. map now renders...
- f. remove locate control from map (TransitMap.)
- g. remove layer switcher code from map (TransitMap.js)
- g. rewrite RotatedMarker.js (see earlier commits to R 15 branches)
- h. add in leaflet context so we can get at zoom layers
- i. this.refs.map.leafletElement
+ 1. check out master
+ 1. run scripts/make_new_dev_branch.sh
+ 1. grab package.json with the React 15.0 dependencies from another branch on github
+ 1. replace withLeaflet hook (5 places in map & vehicles) with function withLeaflet(x) {return x;}
+ 1. map now renders...
+ 1. remove locate control from map (TransitMap.)
+ 1. remove layer switcher code from map (TransitMap.js)
+ 1. rewrite RotatedMarker.js (see earlier commits to R 15 branches)
+ 1. add in leaflet context so we can get at zoom layers
+ 1. this.refs.map.leafletElement
 
 
 TODO Items:
