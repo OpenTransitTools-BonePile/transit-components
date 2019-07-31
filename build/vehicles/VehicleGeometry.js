@@ -8,8 +8,6 @@ require("core-js/modules/es.symbol.iterator");
 
 require("core-js/modules/es.array.concat");
 
-require("core-js/modules/es.array.includes");
-
 require("core-js/modules/es.array.iterator");
 
 require("core-js/modules/es.number.constructor");
@@ -19,8 +17,6 @@ require("core-js/modules/es.object.get-prototype-of");
 require("core-js/modules/es.object.to-string");
 
 require("core-js/modules/es.promise");
-
-require("core-js/modules/es.string.includes");
 
 require("core-js/modules/es.string.iterator");
 
@@ -194,7 +190,7 @@ function (_MapLayer) {
         retVal = res.json();
         return retVal;
       }).then(function (json) {
-        if (geomWsUrl.includes('geojson')) _this2.cachePatternGeojson(json, ap);else _this2.cachePatternEncoded(json, ap);
+        if (geomWsUrl.indexOf('geojson') >= 0) _this2.cachePatternGeojson(json, ap);else _this2.cachePatternEncoded(json, ap);
       }).catch(function (error) {
         console.log("VEH GEOMETRY fetch() error: " + error);
       });

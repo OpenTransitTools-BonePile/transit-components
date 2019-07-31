@@ -33,6 +33,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _reactLeaflet = require("react-leaflet");
 
+var _MyWithLeaflet = _interopRequireDefault(require("../map/MyWithLeaflet"));
+
 var _VehicleMarker = _interopRequireDefault(require("./VehicleMarker"));
 
 var _VehicleGeometry = _interopRequireDefault(require("./VehicleGeometry"));
@@ -128,6 +130,17 @@ function (_MapLayer) {
 
       this.enableCallBacks();
     }
+    /**
+     * this method is used for backporting to React 15
+     * v16:  return this.props.leaflet;
+     * v15:  return this.context;
+     */
+
+  }, {
+    key: "getLeafletContext",
+    value: function getLeafletContext() {
+      return this.props.leaflet;
+    }
   }, {
     key: "_startRefreshing",
     value: function _startRefreshing() {
@@ -165,7 +178,7 @@ function (_MapLayer) {
 
         if (v != null) {
           var ll = [v.lat, v.lon];
-          this.props.leaflet.map.setView(ll);
+          this.getLeafletContext().map.setView(ll);
           this.state.trackedVehicle = v; // update the state with newest vehicle
         }
       }
@@ -195,7 +208,7 @@ function (_MapLayer) {
       if (this.props.visible) {
         // set state, so that markers will redraw on zoom
         // TODO: if calling setState here is perf-problematic, could call setState only on this.closeZoom = (zoom / zoom-1)
-        var zoom = this.props.leaflet.map.getZoom();
+        var zoom = this.getLeafletContext().map.getZoom();
         this.setState({
           mapZoom: zoom
         });
@@ -207,10 +220,10 @@ function (_MapLayer) {
     value: function enableCallBacks() {
       var _this3 = this;
 
-      this.props.leaflet.map.on('zoomstart', function () {
+      this.getLeafletContext().map.on('zoomstart', function () {
         _this3.startZoomCB('start');
       });
-      this.props.leaflet.map.on('zoomend', function () {
+      this.getLeafletContext().map.on('zoomend', function () {
         _this3.endZoomCB('end');
       });
     }
@@ -332,7 +345,7 @@ function (_MapLayer) {
   return SelectVehicles;
 }(_reactLeaflet.MapLayer);
 
-var _default = (0, _reactLeaflet.withLeaflet)(SelectVehicles);
+var _default = (0, _MyWithLeaflet.default)(SelectVehicles);
 
 exports.default = _default;
 module.exports = exports.default;

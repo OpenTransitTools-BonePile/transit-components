@@ -27,7 +27,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactLeaflet = require("react-leaflet");
+var _MyWithLeaflet = _interopRequireDefault(require("./MyWithLeaflet"));
 
 var _leaflet = _interopRequireDefault(require("leaflet.locatecontrol"));
 
@@ -88,7 +88,7 @@ function (_Component) {
   return LocateControl;
 }(_react.Component);
 
-var _default = (0, _reactLeaflet.withLeaflet)(LocateControl);
+var _default = (0, _MyWithLeaflet.default)(LocateControl);
 
 exports.default = _default;
 module.exports = exports.default;

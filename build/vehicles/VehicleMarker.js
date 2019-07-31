@@ -35,6 +35,8 @@ require("leaflet-rotatedmarker");
 
 var _reactLeaflet = require("react-leaflet");
 
+var _MyWithLeaflet = _interopRequireDefault(require("../map/MyWithLeaflet"));
+
 var _VehicleTracker = _interopRequireDefault(require("./VehicleTracker"));
 
 var _RotatedMarker = _interopRequireDefault(require("../map/RotatedMarker"));
@@ -175,7 +177,7 @@ function (_React$Component) {
   return VehicleMarker;
 }(_react.default.Component);
 
-var _default = (0, _reactLeaflet.withLeaflet)(VehicleMarker);
+var _default = (0, _MyWithLeaflet.default)(VehicleMarker);
 
 exports.default = _default;
 module.exports = exports.default;

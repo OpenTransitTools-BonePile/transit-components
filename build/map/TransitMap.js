@@ -41,8 +41,6 @@ var _LocateControl = _interopRequireDefault(require("./LocateControl"));
 
 var _SelectVehicles = _interopRequireDefault(require("../vehicles/SelectVehicles"));
 
-var _AllVehicles = _interopRequireDefault(require("../vehicles/AllVehicles"));
-
 var _ErrorBoundary = _interopRequireDefault(require("../common/ErrorBoundary"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

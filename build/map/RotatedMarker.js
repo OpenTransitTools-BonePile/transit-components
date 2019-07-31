@@ -37,6 +37,8 @@ var _leaflet = require("leaflet");
 
 var _reactLeaflet = require("react-leaflet");
 
+var _MyWithLeaflet = _interopRequireDefault(require("./MyWithLeaflet"));
+
 require("leaflet-rotatedmarker");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -137,7 +139,7 @@ RotatedMarker.defaultProps = {
   rotationOrigin: 'center'
 };
 
-var _default = (0, _reactLeaflet.withLeaflet)(RotatedMarker);
+var _default = (0, _MyWithLeaflet.default)(RotatedMarker);
 
 exports.default = _default;
 module.exports = exports.default;
