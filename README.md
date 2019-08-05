@@ -18,7 +18,7 @@ Backport to React 15:
  1. check out master
  1. run scripts/make_new_dev_branch.sh
  1. grab package.json with the React 15.0 dependencies from another branch on github
- 1. rm -rf node_modules yarn.lock 
+ 1. rm -rf node_modules yarn.lock build/* 
  1. yarn install
  1. rewrite RotatedMarker.js (see earlier commits to R 15 branches)
  1. edit SelectVehicles.getLeafletContext()
@@ -26,22 +26,25 @@ Backport to React 15:
  1. edit MyWithLeaflet.js hook ... return clz;
  1. remove locate control from map (TransitMap.)
  1. remove layer switcher code from map (TransitMap.js)
+ 1. yarn build
+ 1. git commit -a -m "Backport to React 15"
 
 
 TODO Items:
 --
-   1. add overlays (routes / patterns / stops)
-   1. interpolated vehicle position -- Streetcar / estimated position vs. RT
-   1. add search
-   1. add route list - select routes to show vehicles
-   1. localize
-   1. make a pan control
-   1. clean up the control stuff below: more dynamic (layer names & number button from .yml),
-      option to put it in layer switcher or as buttons, etc...
-   1. cleanup
-   
+ 1. refactor -- Component Library best practices / etc...
+ 1. add overlays (routes / patterns / stops)
+ 1. interpolated vehicle position -- Streetcar / estimated position vs. RT
+ 1. add search
+ 1. add route list - select routes to show vehicles
+ 1. localize
+ 1. make a pan control
+ 1. clean up the control stuff below: more dynamic (layer names & number button from .yml),
+    option to put it in layer switcher or as buttons, etc...
+ 1. cleanup
+
 
 FYI:
 --
-   git update-index --assume-unchanged yarn.lock
+  git update-index --assume-unchanged yarn.lock
    
