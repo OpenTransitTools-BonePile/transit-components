@@ -30,6 +30,20 @@ Backport to React 15:
  1. git commit -a -m "Backport to React 15"
 
 
+Integrate Vehicles into MOD
+--
+ 1. run scripts/co_rr_mod.sh
+ 1. cd ../otp-react-redux/
+ 1. edit package.json -- add dependency to OpenTransitTools/transit-components#<branch-name> 
+    "transit-components": "github:OpenTransitTools/transit-components#vehicles-08_01_2019",
+ 1. yarn install -- should see node_modules/transit-components:
+ 1. copy config.yml otp-rr base dir
+ 1. edit lib/components/map/default-map.js (line ~45) to add in Vehicles layer
+    goingt to copy contents from transit-components'  
+ 1. yarn start -- should see 
+
+
+
 TODO Items:
 --
  1. refactor -- Component Library best practices / etc...
