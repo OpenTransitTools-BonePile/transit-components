@@ -39,9 +39,8 @@ Integrate Vehicles into MOD
  1. yarn install -- should see node_modules/transit-components:
  1. copy config.yml otp-rr base dir
  1. edit lib/components/map/default-map.js (line ~45) to add in Vehicles layer
-    goingt to copy contents from transit-components'  
- 1. yarn start -- should see 
-
+    case 'vehicles': return <SelectVehicles visible={false} key={k} {...overlayConfig} />;
+ 1. edit example.css to add vehicle.css content
 
 
 TODO Items:
