@@ -60,6 +60,7 @@ map:
       apix: http://localhost:54145/vehicles
       api: https://maps.trimet.org/gtfs/rt/vehicles
       refresh: 5
+      pauseAnimationOnZoom: true
       default: 'all'
 
     - type: bike-rental

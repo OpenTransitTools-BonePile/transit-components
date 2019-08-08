@@ -26,6 +26,7 @@ Backport to React 15:
  1. edit MyWithLeaflet.js hook ... return clz;
  1. remove locate control from map (TransitMap.)
  1. remove layer switcher code from map (TransitMap.js)
+ 1. comment out import 'promise-polyfill/src/polyfill'; in SelectVehicles.js
  1. yarn build
  1. git commit -a -m "Backport to React 15"
 
