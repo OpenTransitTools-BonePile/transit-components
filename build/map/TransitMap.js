@@ -1,33 +1,15 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.array.map");
-
-require("core-js/modules/es.object.assign");
-
-require("core-js/modules/es.object.get-own-property-descriptor");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
+
+require("core-js/modules/es6.object.assign");
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -134,17 +116,10 @@ function (_React$Component) {
       }, _react.default.createElement(_BaseLayerControl.default, {
         map: this,
         baseLayers: this.props.config.baseLayers
-      }), _react.default.createElement(_LocateControl.default, {
-        options: this.currentLocation()
-      }))), _react.default.createElement(_reactLeaflet.LayersControl, {
-        position: "topright"
-      }, _react.default.createElement(_reactLeaflet.LayersControl.Overlay, {
-        name: "Real-Time Buses and Trains"
-      }, this.props.config.overlays && this.props.config.overlays.map(function (overlayConfig, k) {
+      }))), this.props.config.overlays && this.props.config.overlays.map(function (overlayConfig, k) {
         switch (overlayConfig.type) {
           case 'vehicles':
             return _react.default.createElement(_ErrorBoundary.default, null, _react.default.createElement(_SelectVehicles.default, _extends({
-              leaflet: _this2.leafletMap,
               visible: true,
               key: k
             }, overlayConfig)));
@@ -152,7 +127,7 @@ function (_React$Component) {
           default:
             return null;
         }
-      })))));
+      })));
     }
   }]);
 

@@ -1,55 +1,25 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.filter");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.object.get-own-property-descriptor");
-
-require("core-js/modules/es.object.get-own-property-descriptors");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.keys");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.for-each");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+require("core-js/modules/es7.symbol.async-iterator");
 
-var _leaflet = require("leaflet");
+require("core-js/modules/es6.symbol");
+
+require("core-js/modules/es6.reflect.get");
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactLeaflet = require("react-leaflet");
 
-var _MyWithLeaflet = _interopRequireDefault(require("./MyWithLeaflet"));
-
-require("leaflet-rotatedmarker");
+var _leafletRotatedmarker = require("leaflet-rotatedmarker");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -61,6 +31,10 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -69,8 +43,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var RotatedMarker =
 /*#__PURE__*/
-function (_MapLayer) {
-  _inherits(RotatedMarker, _MapLayer);
+function (_Marker) {
+  _inherits(RotatedMarker, _Marker);
 
   function RotatedMarker() {
     _classCallCheck(this, RotatedMarker);
@@ -81,67 +55,34 @@ function (_MapLayer) {
   _createClass(RotatedMarker, [{
     key: "createLeafletElement",
     value: function createLeafletElement(props) {
-      var el = new _leaflet.Marker(props.position, this.getOptions(props));
-      this.contextValue = _objectSpread({}, props.leaflet, {
-        popupContainer: el
-      });
-      return el;
+      return _get(_getPrototypeOf(RotatedMarker.prototype), "createLeafletElement", this).call(this, props);
     }
   }, {
     key: "updateLeafletElement",
     value: function updateLeafletElement(fromProps, toProps) {
-      if (toProps.position !== fromProps.position) {
-        this.leafletElement.setLatLng(toProps.position);
-      }
-
-      if (toProps.icon !== fromProps.icon) {
-        this.leafletElement.setIcon(toProps.icon);
-      }
-
-      if (toProps.zIndexOffset !== fromProps.zIndexOffset) {
-        this.leafletElement.setZIndexOffset(toProps.zIndexOffset);
-      }
-
-      if (toProps.opacity !== fromProps.opacity) {
-        this.leafletElement.setOpacity(toProps.opacity);
-      }
-
-      if (toProps.draggable !== fromProps.draggable) {
-        if (toProps.draggable === true) {
-          this.leafletElement.dragging.enable();
-        } else {
-          this.leafletElement.dragging.disable();
-        }
-      }
+      _get(_getPrototypeOf(RotatedMarker.prototype), "updateLeafletElement", this).call(this, fromProps, toProps);
 
       if (toProps.rotationAngle !== fromProps.rotationAngle) {
         this.leafletElement.setRotationAngle(toProps.rotationAngle);
       }
 
-      if (toProps.rotationOrigin !== fromProps.rotationOrigin) {
+      if (toProps.rotationOrigin !== toProps.rotationOrigin) {
         this.leafletElement.setRotationOrigin(toProps.rotationOrigin);
       }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var children = this.props.children;
-      return children == null || this.contextValue == null ? null : _react.default.createElement(_reactLeaflet.LeafletProvider, {
-        value: this.contextValue
-      }, children);
     }
   }]);
 
   return RotatedMarker;
-}(_reactLeaflet.MapLayer);
+}(_reactLeaflet.Marker);
 
+exports.default = RotatedMarker;
+RotatedMarker.propTypes = {
+  rotationAngle: _propTypes.default.number.isRequired,
+  rotationOrigin: _propTypes.default.string
+};
 RotatedMarker.defaultProps = {
   rotationOrigin: 'center'
 };
-
-var _default = (0, _MyWithLeaflet.default)(RotatedMarker);
-
-exports.default = _default;
 module.exports = exports.default;
 
 //# sourceMappingURL=RotatedMarker.js

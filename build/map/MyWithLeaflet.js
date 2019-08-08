@@ -12,7 +12,7 @@ var _reactLeaflet = require("react-leaflet");
  * (e.g., this leaflet hook doesn't exist in v15, so for the backport, we comment out withLeaflet)
  */
 function myWithLeaflet(clz) {
-  return (0, _reactLeaflet.withLeaflet)(clz);
+  return clz;
 }
 
 module.exports = exports.default;

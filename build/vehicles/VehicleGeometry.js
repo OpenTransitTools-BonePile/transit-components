@@ -1,31 +1,17 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.number.constructor");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.promise");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.number.constructor");
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -210,10 +196,12 @@ function (_MapLayer) {
       var lon = vehicle.lon.round(places); // step 2: bunch of variables for finding the best split point of the line to the vehicle
 
       var found = 0;
+      var bestEqualsBest = false;
       var bestLat = -1;
       var bestLon = -1;
       var closeLat = 111.111;
       var closeLon = 111.111; // step 3: loop thru the whole line (probably a better / quick sort way to do this, but...)
+      //         note: tried to optimize to stop looping entire route, but not good for 72 (Swan Is)
 
       for (var i = 0; i < geom.length; i++) {
         // step 4: find a rough set of points in the line that are near the vehicle position (2 decimal places)
@@ -223,27 +211,30 @@ function (_MapLayer) {
           var x = Math.abs(geom[i][1] - vehicle.lon);
 
           if (x < closeLon) {
-            bestLon = i;
+            if (closeLon != 111.111) bestLon = i;
             closeLon = x;
           }
 
           var y = Math.abs(geom[i][0] - vehicle.lat);
 
           if (y < closeLat) {
-            bestLat = i;
+            if (closeLat != 111.111) bestLat = i;
             closeLat = y;
-          } // step 6: continue the loop here to collect all rough (2 decimal places) split points
+          } // step 6: found will be index of the best
 
 
-          continue;
-        } // step 6b: we found pattern split points above, so let's exit line traversal here
+          if (bestLon > 0 && bestLon === bestLat) {
+            found = i;
+            retVal = i;
+            bestEqualsBest = true;
+          }
+        }
+      } // step 6b: eliminate step 6's result if there is a better lat/lon index close by each other
 
 
-        if (found > 0) break;
-      } // step 7: have we 'found' any candidate line split points from looping thru the line ?
+      if (bestEqualsBest && Math.abs(bestLon - bestLat) <= 10) bestEqualsBest = false; // step 7: have we 'found' any candidate line split points from looping thru the line ?
 
-
-      if (found > 0) {
+      if (bestEqualsBest === false && found > 0) {
         retVal = found; // if so, let's use that rough index as a split-point
         // step 8: let's see if there's a better split point from step #5 above to use over 'found'
         //         note: we'll occasionally use the vehicle's heading to chose the best split point

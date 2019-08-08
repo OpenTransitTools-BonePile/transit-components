@@ -1,31 +1,13 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.array.map");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.promise");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
 
 require("leaflet");
 
@@ -38,8 +20,6 @@ var _MyWithLeaflet = _interopRequireDefault(require("../map/MyWithLeaflet"));
 var _VehicleMarker = _interopRequireDefault(require("./VehicleMarker"));
 
 var _VehicleGeometry = _interopRequireDefault(require("./VehicleGeometry"));
-
-require("promise-polyfill/src/polyfill");
 
 require("whatwg-fetch");
 
@@ -139,7 +119,7 @@ function (_MapLayer) {
   }, {
     key: "getLeafletContext",
     value: function getLeafletContext() {
-      return this.props.leaflet;
+      return this.context;
     }
   }, {
     key: "_startRefreshing",
@@ -220,12 +200,15 @@ function (_MapLayer) {
     value: function enableCallBacks() {
       var _this3 = this;
 
-      this.getLeafletContext().map.on('zoomstart', function () {
-        _this3.startZoomCB('start');
-      });
-      this.getLeafletContext().map.on('zoomend', function () {
-        _this3.endZoomCB('end');
-      });
+      if (this.props.pauseAnimationOnZoom) {
+        console.log("setting the zoomstart and zoomend callbacks to pause CSS animation on zoom");
+        this.getLeafletContext().map.on('zoomstart', function () {
+          _this3.startZoomCB('start');
+        });
+        this.getLeafletContext().map.on('zoomend', function () {
+          _this3.endZoomCB('end');
+        });
+      }
     }
   }, {
     key: "isNewer",
@@ -334,7 +317,8 @@ function (_MapLayer) {
           controller: _this5,
           closeZoom: _this5.closeZoom,
           midZoom: _this5.midZoom,
-          farZoom: _this5.farZoom
+          farZoom: _this5.farZoom,
+          leaflet: _this5.getLeafletContext()
         });
       }), _react.default.createElement(_VehicleGeometry.default, {
         trackedVehicle: this.state.trackedVehicle
