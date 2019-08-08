@@ -33,16 +33,53 @@ Backport to React 15:
 
 
 Integrate Vehicles into MOD
---
+=
+
+ initial otp-rr setup
+ -
  1. run scripts/co_rr_mod.sh
  1. cd ../otp-react-redux/
- 1. edit package.json -- add dependency to OpenTransitTools/transit-components#<branch-name> 
-    "transit-components": "github:OpenTransitTools/transit-components#vehicles-08_01_2019",
- 1. yarn install -- should see node_modules/transit-components:
- 1. copy config.yml otp-rr base dir
- 1. edit lib/components/map/default-map.js (line ~45) to add in Vehicles layer
-    case 'vehicles': return <SelectVehicles visible={false} key={k} {...overlayConfig} />;
- 1. edit example.css to add vehicle.css content
+ 1. rm -rf node_modules yarn.lock
+ 1. yarn install
+ 1. have a valid config.yml in the directory 
+ 1. yarn start -- is the map working?
+
+ add vehicles
+ -
+ 1. edit package.json -- add dependency to OpenTransitTools/transit-components#<branch-name>
+  
+    `"transit-components": "github:OpenTransitTools/transit-components#vehicles-08_08_2019",`
+ 
+ 1. yarn install -- should now see `ls ./node_modules/transit-components` 
+ 1. edit lib/components/map/default-map.js (line ~45) 
+
+    `import {SelectVehicles} from 'transit-components';`
+    
+    `case 'vehicles': return <SelectVehicles visible={false} key={k} {...overlayConfig} />;` add to switch statement on line ~45. 
+
+ 1. edit lib/components/map/map.css (and example.css) to add vehicle.css content
+ 1. yarn start -- is the otp-rr map working w/vehicles now?
+
+
+ ready trimet-mod-otp
+ -
+ 1. still within **otp-rr** project repo...
+ 1. edit package.json add `"version": "0.1.0",`
+ 1. rm -rf build dist
+ 1. yarn prepublish
+ 1. yarn build
+ 1. git add -f build/* dist/
+ 1. git commit -a -m "add build & dist dirs + vehicles to OTP-RR"
+ 
+ 1. cd ../trimet-mod-otp/
+ 1. rm -rf rm -rf node_modules yarn.lock dist
+ 1. edit package.json -- edit OTP-RR dependency to TriMetPDX github version
+ 1. yarn install
+ 1. add valid config.yml to ./lib/
+ 1. yarn start -- is the trimet mod map working w/vehicles now?
+ 1. yarn dist
+ 1. scp lib/config.yml dist/* modbeta@server:~/public/map-veh/
+
 
 
 TODO Items:
