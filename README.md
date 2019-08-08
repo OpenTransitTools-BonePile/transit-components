@@ -21,12 +21,13 @@ Backport to React 15:
  1. rm -rf node_modules yarn.lock build/* 
  1. yarn install
  1. rewrite RotatedMarker.js (see earlier commits to R 15 branches)
- 1. edit SelectVehicles.getLeafletContext()
- 1. edit SelectVehicles - add leaflet={this.getLeafletContext()} to <VehicleMarker> 
+ 1. edit SelectVehicles.getLeafletContext() -- return this.conext
+ 1. edit SelectVehicles -- comment out import 'promise-polyfill/src/polyfill';
+ 1. edit SelectVehicles -- add leaflet={this.getLeafletContext()} to <VehicleMarker> 
  1. edit MyWithLeaflet.js hook ... return clz;
  1. remove locate control from map (TransitMap.)
  1. remove layer switcher code from map (TransitMap.js)
- 1. comment out import 'promise-polyfill/src/polyfill'; in SelectVehicles.js
+ 1. yarn start -- is the map working?
  1. yarn build
  1. git commit -a -m "Backport to React 15"
 
