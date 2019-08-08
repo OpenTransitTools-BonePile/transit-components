@@ -35,8 +35,8 @@ function update_forked_repo () {
   checkout_update $R master
 }
 
-# sync TM fork of OTP with IBI's fork
-update_forked_repo OpenTripPlanner https://github.com/ibi-group/OpenTripPlanner.git
+# sync TM fork of OTP (routing engine repo) with IBI's fork
+#update_forked_repo OpenTripPlanner https://github.com/ibi-group/OpenTripPlanner.git
 
 # sync TM fork of OTP-RR with IBI's fork
 update_forked_repo otp-react-redux https://github.com/opentripplanner/otp-react-redux.git

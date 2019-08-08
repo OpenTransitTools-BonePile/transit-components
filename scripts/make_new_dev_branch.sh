@@ -22,8 +22,8 @@ function new_dev_branch () {
   cd -
 }
 
-
-# create new dev branch on OTP-RR and MOD fork
+# create new dev branch on OTT-TC, OTP-RR and MOD forks
+new_dev_branch transit-components $1
 new_dev_branch otp-react-redux $1
 new_dev_branch trimet-mod-otp $1
 
