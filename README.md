@@ -68,17 +68,18 @@ Integrate Vehicles into MOD
  1. rm -rf build dist
  1. yarn prepublish
  1. yarn build
- 1. git add -f build/* dist/
- 1. git commit -a -m "add build & dist dirs + vehicles to OTP-RR"
+ 1. git add -f build/* dist/*
+ 1. git commit -a -m "add build (.js) & dist (.css) dirs + vehicles to OTP-RR"
  
  1. cd ../trimet-mod-otp/
- 1. rm -rf rm -rf node_modules yarn.lock dist
- 1. edit package.json -- edit OTP-RR dependency to TriMetPDX github version
+ 1. rm -rf node_modules yarn.lock dist
+ 1. edit package.json -- add OTP-RR dependency to TriMetPDX github version
+ `"otp-react-redux": "github:TriMetPDX/otp-react-redux#vehicles-08_07_2019",`
  1. yarn install
- 1. add valid config.yml to ./lib/
- 1. yarn start -- is the trimet mod map working w/vehicles now?
+ 1. add config.yml to ./lib/
+ 1. yarn start -- is the app showing rt vehicles now?
  1. yarn dist
- 1. scp lib/config.yml dist/* modbeta@server:~/public/map-veh/
+ 1. scp lib/config.yml dist/* mod@server:~/public/map/
 
 
 
