@@ -13,7 +13,7 @@
 }
 
 .vehicle-icon:hover, .vehicle-circle:hover {
-  background-color: orangered;
+  background-color: #00bfff;
 }
 
 .vehicle-animate {
