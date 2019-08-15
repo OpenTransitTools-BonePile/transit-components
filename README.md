@@ -86,8 +86,11 @@ Integrate Vehicles into MOD
 TODO Items:
 --
  1. refactor -- Component Library best practices / etc...
- 1. add overlays (routes / patterns / stops)
+ 1. show layer via url param on load
+ 1. click on line, open popup (what to show?  open tracked vehicle stop popup?)
+ 1. see https://github.com/PaulLeCam/react-leaflet/issues/317 for popus 
  1. interpolated vehicle position -- Streetcar / estimated position vs. RT
+ 1. add overlays (routes / patterns / stops)
  1. add search
  1. add route list - select routes to show vehicles
  1. localize
