@@ -111,34 +111,46 @@ function (_React$Component) {
     value: function makeCircleMarker(size) {
       var v = this.props.vehicle;
       var position = [v.lat, v.lon];
-      var strokeColor = v.colorText || 'white';
-      var fillColor = v.color || 'white';
+      var zPos = 0;
       var classnames = 'vehicle-marker vehicle-circle';
-      if (this.isTracking()) classnames = classnames + ' vehicle-circle-selected';
+
+      if (this.isTracking()) {
+        classnames = classnames + ' vehicle-circle-selected';
+        zPos = 1000;
+      }
+
       var icon = (0, _leaflet.divIcon)({
         className: classnames,
         iconSize: [size, size]
       });
       return _react.default.createElement(_reactLeaflet.Marker, {
         icon: icon,
-        position: position
+        position: position,
+        zIndexOffset: zPos
       }, this.makePopup(), L.Browser.mobile !== true && this.makeToolTip());
     }
   }, {
     key: "makeRotatedMarker",
     value: function makeRotatedMarker() {
       var v = this.props.vehicle;
-      var classnames = 'vehicle-marker vehicle-icon';
-      if (this.isTracking()) classnames = classnames + ' vehicle-icon-selected';
-      var icon = (0, _icons.default)(classnames, v.routeType, v.routeShortName);
       var position = [v.lat, v.lon];
+      var zPos = 0;
       var heading = v.heading;
       if (heading == null || heading < 0 || heading >= 360) heading = 0;
+      var classnames = 'vehicle-marker vehicle-icon';
+
+      if (this.isTracking()) {
+        classnames = classnames + ' vehicle-icon-selected';
+        zPos = 1000;
+      }
+
+      var icon = (0, _icons.default)(classnames, v.routeType, v.routeShortName);
       return _react.default.createElement(_RotatedMarker.default, {
         rotationAngle: heading,
         rotationOrigin: 'center center',
         icon: icon,
-        position: position
+        position: position,
+        zIndexOffset: zPos
       }, this.makePopup(), L.Browser.mobile !== true && this.makeToolTip());
     }
   }, {
