@@ -43,7 +43,7 @@ Integrate Vehicles into MOD
  -
  1. (make sure you ran run scripts/co_rr_mod.sh from above ... else you wont have latest code ) 
  1. cd ../otp-react-redux/
- 1. rm -rf node_modules yarn.lock
+ 1. rm -rf build dist node_modules yarn.lock
  1. yarn install
  1. (see line below) have a valid config.yml in the directory
  1. cp ../transit-components/lib/common/config.yml .
@@ -86,7 +86,7 @@ Integrate Vehicles into MOD
  1. (see line below) add config.yml to ./lib/ 
  1. cp ../transit-components/lib/common/config.yml ./lib/
  1. yarn start -- is the app showing rt vehicles now?
- 1. yarn dist
+ 1. yarn build
  1. scp lib/config.yml dist/* mod@server:~/public/map/
 
 
