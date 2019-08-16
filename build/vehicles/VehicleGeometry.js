@@ -19,7 +19,9 @@ var _reactLeaflet = require("react-leaflet");
 
 var _polyline = _interopRequireDefault(require("@mapbox/polyline"));
 
-var turf = _interopRequireWildcard(require("@turf/turf"));
+var _turfPointOnLine = _interopRequireDefault(require("turf-point-on-line"));
+
+var _turfHelpers = require("turf-helpers");
 
 var utils = _interopRequireWildcard(require("../utils"));
 
@@ -193,9 +195,9 @@ function (_MapLayer) {
     value: function findPointOnLine(vehicle, geom) {
       utils.start();
       var retVal = 0;
-      var pt = turf.point([vehicle.lat, vehicle.lon]);
-      var line = turf.lineString(geom);
-      var snapped = turf.nearestPointOnLine(line, pt, {
+      var pt = (0, _turfHelpers.point)([vehicle.lat, vehicle.lon]);
+      var line = (0, _turfHelpers.lineString)(geom);
+      var snapped = (0, _turfPointOnLine.default)(line, pt, {
         units: 'miles'
       });
 

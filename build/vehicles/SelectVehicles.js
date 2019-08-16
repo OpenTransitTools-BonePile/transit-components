@@ -21,8 +21,6 @@ var _VehicleMarker = _interopRequireDefault(require("./VehicleMarker"));
 
 var _VehicleGeometry = _interopRequireDefault(require("./VehicleGeometry"));
 
-require("promise-polyfill/src/polyfill");
-
 require("whatwg-fetch");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -121,7 +119,7 @@ function (_MapLayer) {
   }, {
     key: "getLeafletContext",
     value: function getLeafletContext() {
-      return this.props.leaflet;
+      return this.context;
     }
   }, {
     key: "_startRefreshing",
@@ -337,7 +335,8 @@ function (_MapLayer) {
           controller: _this5,
           closeZoom: _this5.closeZoom,
           midZoom: _this5.midZoom,
-          farZoom: _this5.farZoom
+          farZoom: _this5.farZoom,
+          leaflet: _this5.getLeafletContext()
         });
       }), _react.default.createElement(_VehicleGeometry.default, {
         trackedVehicle: this.state.trackedVehicle

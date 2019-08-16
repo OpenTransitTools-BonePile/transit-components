@@ -116,13 +116,7 @@ function (_React$Component) {
       }, _react.default.createElement(_BaseLayerControl.default, {
         map: this,
         baseLayers: this.props.config.baseLayers
-      }), _react.default.createElement(_LocateControl.default, {
-        options: this.currentLocation()
-      }))), _react.default.createElement(_reactLeaflet.LayersControl, {
-        position: "topright"
-      }, _react.default.createElement(_reactLeaflet.LayersControl.Overlay, {
-        name: "Real-Time Buses and Trains"
-      }, this.props.config.overlays && this.props.config.overlays.map(function (overlayConfig, k) {
+      }))), this.props.config.overlays && this.props.config.overlays.map(function (overlayConfig, k) {
         switch (overlayConfig.type) {
           case 'vehicles':
             return _react.default.createElement(_ErrorBoundary.default, null, _react.default.createElement(_SelectVehicles.default, _extends({
@@ -133,7 +127,7 @@ function (_React$Component) {
           default:
             return null;
         }
-      })))));
+      })));
     }
   }]);
 
