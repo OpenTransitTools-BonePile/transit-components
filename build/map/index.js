@@ -1,20 +1,8 @@
 "use strict";
 
-require("core-js/modules/es.array.iterator");
+require("core-js/modules/es6.regexp.split");
 
-require("core-js/modules/es.array.map");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/es.string.search");
-
-require("core-js/modules/es.string.split");
-
-require("core-js/modules/web.dom-collections.iterator");
-
-require("core-js/modules/web.url");
+require("core-js/modules/es6.regexp.search");
 
 var _react = _interopRequireDefault(require("react"));
 

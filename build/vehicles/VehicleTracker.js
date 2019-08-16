@@ -1,27 +1,13 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -66,42 +52,55 @@ function (_React$Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(VehicleTracker)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
-      buttonText: "Track Vehicle"
+      buttonText: null
     }, _temp));
   }
 
   _createClass(VehicleTracker, [{
     key: "handleClick",
     value: function handleClick() {
-      if (this.state.isTracking) {
-        this.setState({
-          isTracking: false,
-          buttonText: "Track Vehicle"
-        });
-        this.props.controller.setState({
-          trackedVehicle: null
-        });
+      var txt = null;
+      var veh = null;
+
+      if (this.isTracking()) {
+        txt = this.getButtonText(false);
+        veh = null;
       } else {
-        this.setState({
-          isTracking: true,
-          buttonText: "Stop Tracking"
-        });
-        this.props.controller.setState({
-          trackedVehicle: this.props.vehicle
-        });
+        txt = this.getButtonText(true);
+        veh = this.props.vehicle;
       }
+
+      this.setState({
+        buttonText: txt
+      });
+      this.props.controller.setState({
+        trackedVehicle: veh
+      });
+    }
+  }, {
+    key: "isTracking",
+    value: function isTracking() {
+      var retVal = this.props.controller.isTrackingVehicle(this.props.vehicle);
+      return retVal;
+    }
+  }, {
+    key: "getButtonText",
+    value: function getButtonText(isTracked) {
+      var buttonText = null;
+      if (isTracked) buttonText = "Stop Tracking";else buttonText = "Track Vehicle";
+      return buttonText;
     }
   }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      // This syntax ensures `this` is bound within handleClick
+      var buttonText = this.getButtonText(this.isTracking());
       return _react.default.createElement("button", {
         onClick: function onClick(e) {
           return _this2.handleClick(e);
         }
-      }, this.state.buttonText);
+      }, buttonText);
     }
   }]);
 

@@ -1,31 +1,15 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.array.map");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/es.string.replace");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
+
+require("core-js/modules/es6.regexp.replace");
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -117,13 +101,20 @@ function (_React$Component) {
       }), "  ", _react.default.createElement("br", null)));
     }
   }, {
+    key: "isTracking",
+    value: function isTracking() {
+      var retVal = this.props.controller.isTrackingVehicle(this.props.vehicle);
+      return retVal;
+    }
+  }, {
     key: "makeCircleMarker",
     value: function makeCircleMarker(size) {
       var v = this.props.vehicle;
       var position = [v.lat, v.lon];
       var strokeColor = v.colorText || 'white';
-      var fillColor = v.color || 'black';
+      var fillColor = v.color || 'white';
       var classnames = 'vehicle-marker vehicle-circle';
+      if (this.isTracking()) classnames = classnames + ' vehicle-circle-selected';
       var icon = (0, _leaflet.divIcon)({
         className: classnames,
         iconSize: [size, size]
@@ -137,7 +128,9 @@ function (_React$Component) {
     key: "makeRotatedMarker",
     value: function makeRotatedMarker() {
       var v = this.props.vehicle;
-      var icon = (0, _icons.default)('vehicle-marker vehicle-icon', v.routeType, v.routeShortName);
+      var classnames = 'vehicle-marker vehicle-icon';
+      if (this.isTracking()) classnames = classnames + ' vehicle-icon-selected';
+      var icon = (0, _icons.default)(classnames, v.routeType, v.routeShortName);
       var position = [v.lat, v.lon];
       var heading = v.heading;
       if (heading == null || heading < 0 || heading >= 360) heading = 0;

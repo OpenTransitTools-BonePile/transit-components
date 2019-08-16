@@ -1,31 +1,13 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.array.map");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.promise");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
 
 require("leaflet");
 
@@ -169,6 +151,10 @@ function (_MapLayer) {
         clearInterval(this._refreshTimer);
         this.setBusy(false);
       }
+
+      if (this.state.trackedVehicle != null) {
+        this.state.trackedVehicle = null;
+      }
     }
   }, {
     key: "trackVehicle",
@@ -182,6 +168,20 @@ function (_MapLayer) {
           this.state.trackedVehicle = v; // update the state with newest vehicle
         }
       }
+    }
+  }, {
+    key: "isTrackingVehicle",
+    value: function isTrackingVehicle(vehicle) {
+      var retVal = false;
+
+      try {
+        if (this.state.trackedVehicle && this.state.trackedVehicle.id == vehicle.id) retVal = true;
+      } catch (e) {
+        console.log(e);
+        retVal = false;
+      }
+
+      return retVal;
     }
   }, {
     key: "setAnimationClass",
@@ -220,12 +220,15 @@ function (_MapLayer) {
     value: function enableCallBacks() {
       var _this3 = this;
 
-      this.getLeafletContext().map.on('zoomstart', function () {
-        _this3.startZoomCB('start');
-      });
-      this.getLeafletContext().map.on('zoomend', function () {
-        _this3.endZoomCB('end');
-      });
+      if (this.props.pauseAnimationOnZoom) {
+        console.log("setting the zoomstart and zoomend callbacks to pause CSS animation on zoom");
+        this.getLeafletContext().map.on('zoomstart', function () {
+          _this3.startZoomCB('start');
+        });
+        this.getLeafletContext().map.on('zoomend', function () {
+          _this3.endZoomCB('end');
+        });
+      }
     }
   }, {
     key: "isNewer",

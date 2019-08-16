@@ -1,37 +1,29 @@
 "use strict";
 
-require("core-js/modules/es.symbol");
-
-require("core-js/modules/es.symbol.description");
-
-require("core-js/modules/es.symbol.iterator");
-
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.array.iterator");
-
-require("core-js/modules/es.number.constructor");
-
-require("core-js/modules/es.object.get-prototype-of");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.promise");
-
-require("core-js/modules/es.string.iterator");
-
-require("core-js/modules/web.dom-collections.iterator");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+require("core-js/modules/es7.symbol.async-iterator");
+
+require("core-js/modules/es6.symbol");
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.number.constructor");
 
 var _react = _interopRequireDefault(require("react"));
 
 var _reactLeaflet = require("react-leaflet");
 
 var _polyline = _interopRequireDefault(require("@mapbox/polyline"));
+
+var turf = _interopRequireWildcard(require("@turf/turf"));
+
+var utils = _interopRequireWildcard(require("../utils"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -185,74 +177,33 @@ function (_MapLayer) {
       var retVal = null;
       var ap = this.getAgencyPattern(vehicle);
       var geomWsUrl = this.getUrl(vehicle, ap);
-      console.log("Calling GEO URL: " + geomWsUrl);
+      utils.log("Calling GEO URL: " + geomWsUrl, true);
       fetch(geomWsUrl).then(function (res) {
         retVal = res.json();
         return retVal;
       }).then(function (json) {
         if (geomWsUrl.indexOf('geojson') >= 0) _this2.cachePatternGeojson(json, ap);else _this2.cachePatternEncoded(json, ap);
       }).catch(function (error) {
-        console.log("VEH GEOMETRY fetch() error: " + error);
+        utils.log("VEH GEOMETRY fetch() error: " + error, true);
       });
       return retVal;
     }
   }, {
     key: "findPointOnLine",
     value: function findPointOnLine(vehicle, geom) {
-      /** brute-force find a vertex in the line geometry near the vehicle's position
-       *  a bit hacky line intersection uses rounding points to N decimal places (rough find)
-       *  and then looking for the nearest lat / lon in that subset of points
-       */
-      var retVal = 0; // step 1: round our vehicle position to 2 decimal 'places'
+      utils.start();
+      var retVal = 0;
+      var pt = turf.point([vehicle.lat, vehicle.lon]);
+      var line = turf.lineString(geom);
+      var snapped = turf.nearestPointOnLine(line, pt, {
+        units: 'miles'
+      });
 
-      var places = 2;
-      var lat = vehicle.lat.round(places);
-      var lon = vehicle.lon.round(places); // step 2: bunch of variables for finding the best split point of the line to the vehicle
-
-      var found = 0;
-      var bestLat = -1;
-      var bestLon = -1;
-      var closeLat = 111.111;
-      var closeLon = 111.111; // step 3: loop thru the whole line (probably a better / quick sort way to do this, but...)
-
-      for (var i = 0; i < geom.length; i++) {
-        // step 4: find a rough set of points in the line that are near the vehicle position (2 decimal places)
-        if (geom[i][0].round(places) === lat && geom[i][1].round(places) === lon) {
-          found = i; // step 5: find the closest lat & lon within this sub-set of rough split points
-
-          var x = Math.abs(geom[i][1] - vehicle.lon);
-
-          if (x < closeLon) {
-            bestLon = i;
-            closeLon = x;
-          }
-
-          var y = Math.abs(geom[i][0] - vehicle.lat);
-
-          if (y < closeLat) {
-            bestLat = i;
-            closeLat = y;
-          } // step 6: continue the loop here to collect all rough (2 decimal places) split points
-
-
-          continue;
-        } // step 6b: we found pattern split points above, so let's exit line traversal here
-
-
-        if (found > 0) break;
-      } // step 7: have we 'found' any candidate line split points from looping thru the line ?
-
-
-      if (found > 0) {
-        retVal = found; // if so, let's use that rough index as a split-point
-        // step 8: let's see if there's a better split point from step #5 above to use over 'found'
-        //         note: we'll occasionally use the vehicle's heading to chose the best split point
-
-        if (bestLat >= 0 && bestLon >= 0) {
-          if (bestLat === bestLon) retVal = bestLat;else if (this.isNorthbound(vehicle) || this.isSouthbound(vehicle)) retVal = bestLat;else retVal = bestLon;
-        }
+      if (snapped && snapped.properties.index) {
+        retVal = snapped.properties.index;
       }
 
+      utils.end();
       return retVal;
     }
   }, {
@@ -302,7 +253,7 @@ function (_MapLayer) {
       if (!vehicle) return _react.default.createElement(_reactLeaflet.FeatureGroup, null);
       var pattern = this.getGeometry(vehicle);
       if (!pattern) return _react.default.createElement(_reactLeaflet.FeatureGroup, null);
-      console.log("drawing...");
+      utils.log("drawing geometry for pattern ".concat(this.getAgencyPattern(vehicle)));
       var gray = '#555555';
       var color = '#00bfff';
       var segments = [];
