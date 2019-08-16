@@ -16,7 +16,7 @@ Vehicle Apps & Services:
 Backport to React 15:
 --
  1. check out master
- 1. run scripts/make_new_dev_branch.sh
+ 1. run scripts/make_new_dev_branch.sh <optional release name>
  1. grab package.json with the React 15.0 dependencies from another branch on github
  1. rm -rf node_modules yarn.lock build/* 
  1. yarn install
@@ -35,7 +35,7 @@ Backport to React 15:
 Integrate Vehicles into MOD
 =
 
- initial otp-rr setup
+ I. initial otp-rr setup
  -
  1. run scripts/co_rr_mod.sh
  1. cd ../otp-react-redux/
@@ -44,7 +44,7 @@ Integrate Vehicles into MOD
  1. have a valid config.yml in the directory 
  1. yarn start -- is the map working?
 
- add vehicles
+ II. add vehicles
  -
  1. edit package.json -- add dependency to OpenTransitTools/transit-components#<branch-name>
   
@@ -60,8 +60,7 @@ Integrate Vehicles into MOD
  1. edit lib/components/map/map.css (and example.css) to add vehicle.css content
  1. yarn start -- is the otp-rr map working w/vehicles now?
 
-
- ready trimet-mod-otp
+ III. ready trimet-mod-otp
  -
  1. still within **otp-rr** project repo...
  1. edit package.json add `"version": "0.1.0",`
@@ -86,8 +85,11 @@ Integrate Vehicles into MOD
 TODO Items:
 --
  1. refactor -- Component Library best practices / etc...
- 1. add overlays (routes / patterns / stops)
+ 1. show layer via url param on load
+ 1. click on line, open popup (what to show?  open tracked vehicle stop popup?)
+ 1. see https://github.com/PaulLeCam/react-leaflet/issues/317 for popus 
  1. interpolated vehicle position -- Streetcar / estimated position vs. RT
+ 1. add overlays (routes / patterns / stops)
  1. add search
  1. add route list - select routes to show vehicles
  1. localize
