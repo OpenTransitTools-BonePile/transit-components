@@ -1,5 +1,10 @@
 #!/bin/bash
 
+##
+## cd vehicles/
+## ./scripts/new_dev_branch august-release
+##
+
 function new_dev_branch () {
   D=$(date +"%m_%d_%Y")
   R=$1
