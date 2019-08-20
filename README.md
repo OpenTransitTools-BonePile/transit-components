@@ -1,5 +1,13 @@
 <a href="https://www.browserstack.com/automate/public-build/OVhaWXRrQysyU0tKM1JZL0p0ZDBwS2dXcitDT3RpamZNYW9tc3FLcGxDVT0\tLWhHYjloQzJWTTNES0FUdU52SjlTSkE9PQ==--9442d8aaef9206dcbf96e8c746804ade957f604d"><img src='https://www.browserstack.com/automate/badge.svg?badge_key=OVhaWXRrQysyU0tKM1JZL0p0ZDBwS2dXcitDT3RpamZNYW9tc3FLcGxDVT0tLWhHYjloQzJWTTNES0FUdU52SjlTSkE9PQ==--9442d8aaef9206dcbf96e8c746804ade957f604d'></a>
 
+REFACTOR TODO:
+ - DOCS: https://github.com/Turfjs/turf/blob/master/scripts/generate-readmes
+ - TESTS: 
+ - CI/CD:
+ - (note look at .d.ts type files and also create new module: https://github.com/Turfjs/turf/blob/master/scripts/create-new-module)
+ -
+
+
 Vehicle Apps & Services:
 --
  - https://modbeta.trimet.org/vehicles/?routeId=all
