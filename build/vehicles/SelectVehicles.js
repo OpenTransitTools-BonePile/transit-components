@@ -21,8 +21,6 @@ var _VehicleMarker = _interopRequireDefault(require("./VehicleMarker"));
 
 var _VehicleGeometry = _interopRequireDefault(require("./VehicleGeometry"));
 
-require("promise-polyfill/src/polyfill");
-
 require("whatwg-fetch");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
