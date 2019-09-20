@@ -1,0 +1,40 @@
+<!--
+This first GL map uses free data from https://osmbuildings.org
+
+Next steps:
+ a. add layer (vehicles?)
+ b. replace w/custom map tiles
+ c. how to add ortho tiles to vector tile layer
+ d. React-ify me!
+
+Frank - September 15, 2019
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <title>Simple 3d map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+      body { margin:0; padding:0; }
+      #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'https://data.osmbuildings.org/0.2/anonymous/style.json',
+      center: [-122.67, 45.52],
+      //center: [13.40438, 52.51836],
+      zoom: 16,
+      bearing: 300,
+      pitch: 60,
+      attributionControl: true
+    });
+    </script>
+  </body>
+</html>
