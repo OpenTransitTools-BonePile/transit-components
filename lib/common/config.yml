@@ -1,6 +1,6 @@
 #
 # TriMet MOD Map
-# Config built on: Friday, August 30, 2019 @ 10:07am
+# Config built on: Thursday, October 31, 2019 @ 1:06pm
 #
 
 # react-router config, for URL routing (not to be confused with multimodal/OTP routing)
@@ -97,7 +97,7 @@ map:
 
     - type: zipcar
       name: Zipcar Locations
-      api: https://betaplanner.trimet.org/ws/carshare/zipcar/data.json
+      api: https://newplanner.trimet.org/ws/carshare/zipcar/data.json
 
     - type: bike-rental
       name: BIKETOWN Locations
@@ -280,7 +280,7 @@ map:
 
 
 geocoder:
-  baseUrl: https://betaplanner.trimet.org/ws/solrwrap/v0/pelias
+  baseUrl: https://newplanner.trimet.org/ws/solrwrap/v0/pelias
   maxNearbyStops: 6
   type: PELIAS
   boundary:
@@ -406,7 +406,7 @@ dateTime:
 
 # Alternate TransitIndex API
 alternateTransitIndex:
-  apiRoot: https://betaplanner.trimet.org/ws/ti/v0/
+  apiRoot: https://newplanner.trimet.org/ws/ti/v0/
   services:
      - stops
      - stops/routes
