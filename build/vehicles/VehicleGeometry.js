@@ -58,7 +58,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 // const tiUrl = "https://maps.trimet.org/otp_mod/index";
 // const tiUrl = "http://localhost:54445/ti";
 //const tiUrl = "https://maps7.trimet.org/ti/index";
-var tiUrl = "https://betaplanner.trimet.org/ws/ti/v0/index"; //const geojson = "";  // use this setting if want to use encoded vs. geojson
+var tiUrl = "https://newplanner.trimet.org/ws/ti/v0/index"; // TODO: FIX ME !!
+//const geojson = "";  // use this setting if want to use encoded vs. geojson
 
 var geojson = "/geojson";
 
